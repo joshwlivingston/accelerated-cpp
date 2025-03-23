@@ -26,6 +26,7 @@ int main()
     const int rows_total = greeting_padding_rows * 2 + 3;
     const int bottom_row = rows_total - 1;
     const int greeting_row_start = greeting_padding_rows + 1;
+    
 
     cout << "How much horizontal padding would you like? ";
     int greeting_padding_columns;    
@@ -35,13 +36,16 @@ int main()
     const std::string::size_type n_spaces = cols_total - 2;
     const int greeting_column_start = greeting_padding_columns + 1;
 
+    const std::string whitespace_row(n_spaces, ' ');
+    const std::string whitespace_next_to_greeting(greeting_padding_columns, ' ');
+    const std::string border_row(cols_total, '*');
+
     cout << std::endl;
 
     for (int r = 0; r != rows_total; ++r) {
         if (r == 0 || r == bottom_row) {
             // 1. Top or bottom row - row border
-            const std::string border(cols_total, '*');
-            cout << border << std::endl;
+            cout << border_row << std::endl;
             continue;
         }
 
@@ -63,16 +67,14 @@ int main()
                     c += greeting_size;
                 } else {
                     // 4. Horizontal whitespace next to greeting
-                    const std::string whitespace(greeting_padding_columns, ' ');
-                    cout << whitespace;
+                    cout << whitespace_next_to_greeting;
                     c += greeting_padding_columns;
                 }
                 continue;                
             }
 
             // 5. Otherwise, we are full-row whitespace
-            const std::string whitespace(n_spaces, ' ');
-            cout << whitespace;
+            cout << whitespace_row;
             c += n_spaces;
         }
         cout << std::endl;
