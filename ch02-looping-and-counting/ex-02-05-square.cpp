@@ -10,7 +10,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
-int main() 
+int main()
 {
     cout << "Enter the square's dimension: ";
     string::size_type square_dim;
@@ -23,6 +23,6 @@ int main()
         cout << square_row;
         cout << endl;
     }
-    
+
     return 0;
 }

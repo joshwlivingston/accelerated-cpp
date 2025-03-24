@@ -1,8 +1,8 @@
 /*
-Why 
-  `for (int i = 0; i != i_total; ++i) {}` 
-and not 
-  `for (int i = 1; i <= i_total; ++i) {}` 
+Why
+  `for (int i = 0; i != i_total; ++i) {}`
+and not
+  `for (int i = 1; i <= i_total; ++i) {}`
 ?
 
 1. We can use asymmetric range to describe  ( [0, rows) vs [1, rows] )

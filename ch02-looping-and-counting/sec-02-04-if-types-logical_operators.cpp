@@ -15,26 +15,33 @@ int main()
     // it's best practice to use the library's defined type for the given purpose
     const std::string::size_type cols_total = greeting.size() + greeting_padding * 2 + 2;
 
-
     std::cout << std::endl;
     int r = 0;
-    while (r != rows_total) {
+    while (r != rows_total)
+    {
         std::string::size_type c = 0;
 
         // invariant: we have written c characters in the current row
-        while (c != cols_total) {
+        while (c != cols_total)
+        {
             std::string out;
 
             // || is left-associative (like <<) and does not evaluate RHS if LHS is true
             // not evaluating RHS on LHS true is called short-circuit evaluation
-            if (r == 0 || r == rows_total - 1 || c == 0 || c == cols_total - 1) {
+            if (r == 0 || r == rows_total - 1 || c == 0 || c == cols_total - 1)
+            {
                 out = "*";
-            } else {
+            }
+            else
+            {
                 // write one or more nonborder characters
-                if (r == greeting_padding + 1 && c == greeting_padding + 1) {
+                if (r == greeting_padding + 1 && c == greeting_padding + 1)
+                {
                     // this is the first character in the greeting
                     out = greeting;
-                } else {
+                }
+                else
+                {
                     out = " ";
                 }
             }

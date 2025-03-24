@@ -10,7 +10,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
-int main() 
+int main()
 {
     cout << "Enter the rectangle's height: ";
     string::size_type dim_height;
@@ -28,6 +28,6 @@ int main()
         cout << rectangle_row;
         cout << endl;
     }
-    
+
     return 0;
 }

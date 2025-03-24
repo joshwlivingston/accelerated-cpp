@@ -12,7 +12,7 @@ int main()
     std::cout << "Please enter your first name: ";
 
     // define name variable
-    std::string name; 
+    std::string name;
 
     // read into name variable as string
     // std:: string trims whitespace
@@ -22,6 +22,6 @@ int main()
     // write a greeting
     // std::cout flushes the cin buffer
     std::cout << "Hello, " << name << "!" << std::endl;
-    
+
     return 0;
 }

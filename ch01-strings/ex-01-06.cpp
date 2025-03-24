@@ -26,7 +26,7 @@ And what is yours? Samuel Beckett
 Hello, Samuel Beckett nice to meet you too!
 
 
-My prediction was incorrect. 
+My prediction was incorrect.
 >> will take the whitespace and read the input as two separate inputs.
 So, the first cin will flush the first cout,
   and the second cin will automatically flush the second cout.
@@ -47,9 +47,10 @@ int main()
     std::string name;
     std::cin >> name;
     std::cout << "Hello, " << name
-        << std::endl << "And what is yours? ";
+              << std::endl
+              << "And what is yours? ";
     std::cin >> name;
     std::cout << "Hello, " << name
-        << "; nice to meet you too!" << std::endl;
+              << "; nice to meet you too!" << std::endl;
     return 0;
 }

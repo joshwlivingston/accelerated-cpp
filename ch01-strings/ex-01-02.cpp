@@ -12,9 +12,9 @@ Ans: No, the expression is not valid as written, since "Hello" is a string liter
 
 int main()
 {
-    const std::string exclam = "!";
-    const std::string hello = "Hello";
-    const std::string message = hello + ", world" + exclam;
-    std::cout << message << std::endl;
-    return 0;
+  const std::string exclam = "!";
+  const std::string hello = "Hello";
+  const std::string message = hello + ", world" + exclam;
+  std::cout << message << std::endl;
+  return 0;
 }

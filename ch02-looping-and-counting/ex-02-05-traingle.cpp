@@ -10,7 +10,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
-int main() 
+int main()
 {
     const int MAX_TRIES = 5;
     int counter = 0;
@@ -30,7 +30,7 @@ int main()
 
     // middle rows
     string::size_type whitespace_middle_length = 1;
-    
+
     for (int i = 1; i != dim_last_index; ++i)
     {
         const string whitespace_side(whitespace_side_length, ' ');
@@ -48,6 +48,6 @@ int main()
         cout << "* ";
     }
     cout << "*" << endl;
-    
+
     return 0;
 }

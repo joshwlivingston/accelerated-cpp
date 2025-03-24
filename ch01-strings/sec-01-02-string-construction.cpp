@@ -9,7 +9,7 @@ Please enter your first name: Estragon
 *                  *
 ********************
 
-The program produces five lines of output. 
+The program produces five lines of output.
 A sensible strategy is to build the output one piece at a time.
 */
 #include <iostream>
@@ -24,7 +24,7 @@ int main()
     // = symbol here does implicit conversion (string literal --> string)
     // + operator is overloaded for strings
     // here, + means string concatenation
-    
+
     // "strictly speaking, the program gains nothing by using const"
     // but it enhances understandability
     const std::string greeting = "Hello, " + name + "!";
@@ -38,7 +38,7 @@ int main()
 
     // second and fourth line
     // string concatentation
-    const std:: string second = "* " + spaces + " *";
+    const std::string second = "* " + spaces + " *";
 
     // first and fifth line
     // repeat '*' across entire line
