@@ -15,15 +15,15 @@ int main()
 
     vector<double> numbers;
     double number;
-    while(cin >> number)
+    while (cin >> number)
     {
         numbers.push_back(number);
     }
 
-    cout << endl 
+    cout << endl
          << numbers[0];
 
-    cout << endl 
+    cout << endl
          << median(numbers);
 
     return 0;
