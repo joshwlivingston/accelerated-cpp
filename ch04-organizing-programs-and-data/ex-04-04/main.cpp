@@ -58,11 +58,9 @@ int main()
 
     const int column_l_precision = size(number_end, kDecimalPlacesOut);
     const int column_l_width = column_l_precision + 1;
-    
 
     const int column_r_precision = size(number_end * number_end, kDecimalPlacesOut);
-    const int column_r_width =  column_r_precision + 2;
-    
+    const int column_r_width = column_r_precision + 2;
 
     if (number_end <= number_start)
     {
@@ -74,12 +72,12 @@ int main()
     for (i = number_start; i < number_end; ++i)
     {
         cout << endl
-             
+
              << setprecision(column_l_precision)
              << setw(column_l_width)
 
              << i
-             
+
              << setprecision(column_r_precision)
              << setw(column_r_width)
 
