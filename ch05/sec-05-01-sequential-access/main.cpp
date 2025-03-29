@@ -208,6 +208,23 @@ int main()
         }
         cout << endl;
     }
+    cout << endl;
+
+    vector<StudentInfo> students_failed = extract_fails_f2(students);
+
+    cout << endl
+         << "Passing Students: " << endl;
+    for (vector<StudentInfo>::size_type i = 0; i != students.size(); ++i)
+    {
+        cout << students[i].name << endl;
+    }
+
+    cout << endl
+         << "Failing Students: " << endl;
+    for (vector<StudentInfo>::size_type i = 0; i != students_failed.size(); ++i)
+    {
+        cout << students_failed[i].name << endl;
+    }
 
     return 0;
 }
