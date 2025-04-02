@@ -1052,3 +1052,7 @@ dkms.conf
 *.uf2
 # Raspberry Pi Pico disassembler file
 *.dis
+
+
+# cmake seettings
+.vscode/settings.json
