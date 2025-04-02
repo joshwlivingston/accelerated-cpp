@@ -9,17 +9,17 @@ file_size list vector
    73,500  8.8  597.1
 */
 
-#include "grade.h"
-#include "median.h"
-#include "read.h"
-#include "student_info.h"
-
 #include <algorithm>
 #include <stdexcept>
 #include <iomanip>
 #include <iostream>
 #include <list>
 #include <string>
+
+#include "grade.h"
+#include "median.h"
+#include "read.h"
+#include "student_info.h"
 
 using std::cin;
 using std::cout;
