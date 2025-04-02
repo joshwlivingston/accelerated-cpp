@@ -35,7 +35,7 @@ using std::string;
 int main()
 {
     // change type from <vector> to <list>
-    list<StudentInfo> students;
+    Students students;
     StudentInfo student;
     string::size_type longest_student_name_length = 0;
 
@@ -50,7 +50,7 @@ int main()
 
     cout << endl;
     // use iterator instead of indices
-    list<StudentInfo>::const_iterator iter = students.begin();
+    Students::const_iterator iter = students.begin();
     while (iter != students.end())
     {
         cout << iter->name
@@ -68,7 +68,7 @@ int main()
         cout << endl;
     }
 
-    list<StudentInfo> students_failed = extract_fails(students);
+    Students students_failed = extract_fails(students);
     cout << endl
          << "Passing Students: " << endl;
     // use iterator instead of indices

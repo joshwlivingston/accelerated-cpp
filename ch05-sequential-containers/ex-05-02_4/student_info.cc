@@ -1,13 +1,11 @@
 #include "student_info.h"
 
+#include <ios>
+
 #include "grade.h"
 #include "read.h"
 
-#include <ios>
-#include <list>
-
 using std::istream;
-using std::list;
 
 bool compare_by_name(
     const StudentInfo &student_info_x,
@@ -30,10 +28,10 @@ Use a list instead of a vector
 
 - The *only* change here is changing the types
 */
-list<StudentInfo> extract_fails(list<StudentInfo> &students)
+Students extract_fails(Students &students)
 {
-    list<StudentInfo> fail;
-    list<StudentInfo>::const_iterator iter = students.begin();
+    Students fail;
+    Students::const_iterator iter = students.begin();
 
     while (iter != students.end())
     {
