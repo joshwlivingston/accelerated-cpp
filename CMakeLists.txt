@@ -11,7 +11,7 @@ add_executable(
 
 # Chapter 05 Exercise 02
 add_executable(
-    ex-05-02 
+    ex-05-02_4 
     ch05-sequential-containers/ex-05-02_4/main.cc 
     ch05-sequential-containers/ex-05-02_4/student_info.cc 
     ch05-sequential-containers/ex-05-02_4/grade.cc 
