@@ -1,6 +1,7 @@
 #include "strings.h"
 #include "stringvec.h"
 
+#include <algorithm>
 #include <stdexcept>
 #include <string>
 #include <vector>

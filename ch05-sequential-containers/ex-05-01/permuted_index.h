@@ -19,6 +19,6 @@ struct PermutedIndex {
 // permuted_index.cc
 PermutedIndex get_permuted_index(const std::vector<std::string> &);
 bool compare(const PermutedIndexEntry &, const PermutedIndexEntry &);
-std::vector<std::string> hcat(PermutedIndex &, const string &);
+std::vector<std::string> hcat(PermutedIndex &, const std::string &);
 
 #endif
