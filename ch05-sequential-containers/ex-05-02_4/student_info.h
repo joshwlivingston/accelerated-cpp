@@ -7,8 +7,6 @@
 #include <string>
 #include <vector>
 
-typedef std::list<StudentInfo> Students;
-
 // Student name and grades
 struct StudentInfo
 {
@@ -18,7 +16,8 @@ struct StudentInfo
     std::vector<double> homework; // Student's homework scores
 };
 
-bool compare_by_name(const StudentInfo &student_info_x, const StudentInfo &student_info_y);
+typedef std::list<StudentInfo> Students;
+
 std::istream &read(std::istream &stream_in, StudentInfo &student_info);
 double grade(const StudentInfo &);
 double fgrade(const StudentInfo &);

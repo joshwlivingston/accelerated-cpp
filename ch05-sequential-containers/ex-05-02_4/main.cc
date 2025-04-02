@@ -10,10 +10,11 @@ file_size list vector
 */
 
 #include <algorithm>
-#include <stdexcept>
+#include <chrono>
 #include <iomanip>
 #include <iostream>
 #include <list>
+#include <stdexcept>
 #include <string>
 
 #include "grade.h"
@@ -21,70 +22,63 @@ file_size list vector
 #include "read.h"
 #include "student_info.h"
 
+using std::cerr;
 using std::cin;
 using std::cout;
 using std::domain_error;
 using std::endl;
+using std::exception;
 using std::list;
 using std::max;
+using std::printf;
 using std::setprecision;
 using std::streamsize;
 using std::string;
-
+using std::time_t;
+using std::chrono::duration_cast;
+using std::chrono::nanoseconds;
+using std::chrono::steady_clock;
 
 int main()
 {
-    // change type from <vector> to <list>
     Students students;
     StudentInfo student;
     string::size_type longest_student_name_length = 0;
 
-    while (read(cin, student))
+    try
     {
-        longest_student_name_length = max(longest_student_name_length, student.name.size());
-        students.push_back(student);
+        while (read(cin, student))
+        {
+            longest_student_name_length = max(longest_student_name_length, student.name.size());
+            students.push_back(student);
+        }
     }
-
-    // std::sort() does not support lists
-    students.sort(compare_by_name);
-
-    cout << endl;
-    // use iterator instead of indices
-    Students::const_iterator iter = students.begin();
-    while (iter != students.end())
+    catch (const domain_error &e)
     {
-        cout << iter->name
-             << string(longest_student_name_length + 1 - iter->name.size(), ' ');
-        try
-        {
-            const streamsize precision_original = cout.precision();
-            double final_grade = grade(*iter);
-            cout << setprecision(3) << final_grade << setprecision(precision_original);
-        }
-        catch (domain_error e)
-        {
-            cout << e.what();
-        }
         cout << endl;
     }
+
+    const steady_clock::time_point begin = steady_clock::now();
 
     Students students_failed = extract_fails(students);
     cout << endl
          << "Passing Students: " << endl;
-    // use iterator instead of indices
-    for (iter = students.begin(); iter != students.end(); ++iter)
+    for (Students::const_iterator it = students.begin(); it != students.end(); ++it)
     {
-        cout << iter->name << endl;
+        cout << it->name << endl;
     }
 
     cout << endl
          << "Failing Students: " << endl;
 
-    // use iterator instead of indices
-    for (iter = students_failed.begin(); iter != students_failed.end(); ++iter)
+    for (Students::const_iterator it = students_failed.begin(); it != students_failed.end(); ++it)
     {
-        cout << iter->name << endl;
+        cout << it->name << endl;
     }
+
+    const steady_clock::time_point end = steady_clock::now();
+
+    cout << "Time difference: " << duration_cast<nanoseconds>(end - begin).count() << "[µs]" << endl;
 
     return 0;
 }
