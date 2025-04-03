@@ -58,7 +58,7 @@ int main()
         cout << endl;
     }
 
-    const steady_clock::time_point begin = steady_clock::now();
+    const steady_clock::time_point start = steady_clock::now();
 
     Students students_failed = extract_fails(students);
     cout << endl
@@ -78,7 +78,16 @@ int main()
 
     const steady_clock::time_point end = steady_clock::now();
 
-    cout << "Time difference: " << duration_cast<nanoseconds>(end - begin).count() << "[µs]" << endl;
+    if (start == end)
+    {
+        cout << "Time difference: " << "0" << "[µs]" << endl;
+    }
+    else
+    {
+        cout << "Time difference: " << duration_cast<nanoseconds>(end - start).count() << "[µs]" << endl;
+    }
+
+    
 
     return 0;
 }

@@ -11,5 +11,6 @@ typedef std::vector<std::string> strvec;
 // strvec.cpp
 strvec center(const strvec &);
 std::string center(const std::string &, const string_size &);
+string_size width(const strvec &);
 
 #endif
