@@ -9,7 +9,7 @@ add_executable(
     ch05-sequential-containers/ex-05-01/stringvec.cc
 )
 
-# Chapter 05 Exercise 02-04
+# Chapter 05 Exercises 02-04
 add_executable(
     ex-05-02_4 
     ch05-sequential-containers/ex-05-02_4/main.cc 
@@ -24,4 +24,15 @@ add_executable(
     ex-05-05
     ch05-sequential-containers/ex-05-05/main.cc
     ch05-sequential-containers/ex-05-05/strvec.cc
+)
+
+# Chapter 05 Exercise 06
+add_executable(
+    ex-05-06
+    ch05-sequential-containers/ex-05-06/main.cc 
+    ch05-sequential-containers/ex-05-06/students.cc 
+    ch05-sequential-containers/ex-05-06/student_info.cc 
+    ch05-sequential-containers/ex-05-06/grade.cc 
+    ch05-sequential-containers/ex-05-06/median.cc 
+    ch05-sequential-containers/ex-05-06/read.cc
 )
