@@ -12,6 +12,8 @@ Notable differences in speed were not observed until ~4800 students were include
 
 However, when the fail threshold was increased to 95 and below, substantial differences were observed. The vector processed the students over 1.18 seconds, while the list processed the students in only 0.42 seconds.
 
+This sugeests that the number of `erase()` calls is key to determining whether `vector` or `list` will be faster.
+
 So, the data type must be chosen based not only on optimization of specific operators; the frequency of the operation must also be taken into account.
 
 ## Exercise Text
