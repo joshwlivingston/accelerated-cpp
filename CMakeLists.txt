@@ -36,3 +36,9 @@ add_executable(
     ch05-sequential-containers/ex-05-06/median.cc 
     ch05-sequential-containers/ex-05-06/read.cc
 )
+
+# Chapter 05 Exercise 09
+add_executable(
+    ex-05-09
+    ch05-sequential-containers/ex-05-09.cc
+)
