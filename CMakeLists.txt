@@ -42,3 +42,10 @@ add_executable(
     ex-05-09
     ch05-sequential-containers/ex-05-09.cc
 )
+
+# Chapter 05 Exercise 10
+add_executable(
+    ex-05-10
+    ch05-sequential-containers/ex-05-10/main.cc
+    ch05-sequential-containers/ex-05-10/palindromes.cc
+)
