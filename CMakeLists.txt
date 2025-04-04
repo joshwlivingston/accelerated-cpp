@@ -78,6 +78,5 @@ add_executable(
     sec-06-02
     ch06-algorithms/sec-06-02/main.cc
     ch06-algorithms/sec-06-02/student_info.cc
-    ch06-algorithms/sec-06-02/median.cc
     ch06-algorithms/sec-06-02/doublevec.cc
 )

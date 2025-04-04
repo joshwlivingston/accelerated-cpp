@@ -60,3 +60,28 @@ is equivalent to
 it = begin;
 ++begin;
 ```
+
+### Algorithms
+Algorithms work on the elements of containers, not the containers themselves.
+
+For example, in the following:
+```cpp
+remove_if(students.begin(), students.end(), fgrade);
+```
+
+No elements are actually removed from students. Instead, elements that are not "removed"
+are placed at the beginning of students. To actually remove, a second call, to `erase()`,
+is necessary:
+```cpp
+students.erase(remove_if(students.begin(), students.end(), fgrade), students.end())
+```
+
+Note that in the above, `remove_if()` returns an iterator correesponding to the location of 
+the first element of elements matching the provided predicate.
+
+Most algorithms return iterators, and return the ending iterator on "no match."
+
+So the code for a general "search" algorithm is:
+```
+has_match = search(iter_begin, iter_end, predicate) != iter_end;
+```
