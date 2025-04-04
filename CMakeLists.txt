@@ -40,7 +40,7 @@ add_executable(
 # Chapter 05 Exercise 09
 add_executable(
     ex-05-09
-    ch05-sequential-containers/ex-05-09.cc
+    ch05-sequential-containers/ex-05-09-lowercase-sorting.cc
 )
 
 # Chapter 05 Exercise 10
