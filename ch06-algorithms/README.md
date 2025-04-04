@@ -4,24 +4,7 @@
 Unless otherwise noted, all algorithms introduced come from the `<algorithm>`
 header.
 
-### Postfix operators
-Operators can be applied after variables as well, with different bahaviors.
-These operators are known as **postfix** operators, as opposed to **prefix**
-operators.
-
-For example:
-```cpp
-it = begin++;
-```
-
-is equivalent to 
-
-```cpp
-it = begin;
-++begin;
-```
-
-### Section 1: Analyzing Strings
+### Using iterators instead of indices
 Consdier the act of copying the contents of one vector, `vec_to_copy`, into
 another vector, `vec_to_return`.
 ```cpp
@@ -40,7 +23,7 @@ an iterator adaptor.
 Separating the aglorithm from the iteration allows the programmer to choose which
 specfic operations to use.
 
-#### Generic Algorithm
+### Generic Algorithm
 A **generic algorithm** does not belong to any particular container, but instead
 modifies its behavior based on the data passed to it. Usually, the standard 
 library algorithms take iterators for arguments.
@@ -56,7 +39,24 @@ while (begin != end)
     *out++ = *begin++;
 ```
 
-#### Iterator Adaptor
+### Iterator Adaptor
 **Iterator adaptors**, defined in `<iterator>`, are functions that yield iterators
 with certain properties. The most common iterator adaptor is `back_inserter()`, which
 appends values to its argument when the iterator it yields is used as a destination.
+
+### Postfix operators
+Operators can be applied after variables as well, with different bahaviors.
+These operators are known as **postfix** operators, as opposed to **prefix**
+operators.
+
+For example:
+```cpp
+it = begin++;
+```
+
+is equivalent to 
+
+```cpp
+it = begin;
+++begin;
+```
