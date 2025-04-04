@@ -8,6 +8,8 @@ input followed by the uppercase words.
 Ans:
 Since sort() places uppercase words before lowercase words, our program
 simply calls sort() then reverse() on the reference vector.
+
+This is a great example of where using the standard library results in great code.
 */
 
 #include <algorithm>

@@ -4,19 +4,19 @@ project(accelerated-cpp)
 # Chapter 05 Exercise 01
 add_executable(
     ex-05-01 
-    ch05-sequential-containers/ex-05-01/permuted_index.cc 
-    ch05-sequential-containers/ex-05-01/strings.cc 
-    ch05-sequential-containers/ex-05-01/stringvec.cc
+    ch05-sequential-containers/ex-05-01-permuted-index/permuted_index.cc 
+    ch05-sequential-containers/ex-05-01-permuted-index/strings.cc 
+    ch05-sequential-containers/ex-05-01-permuted-index/stringvec.cc
 )
 
 # Chapter 05 Exercises 02-04
 add_executable(
     ex-05-02_4 
-    ch05-sequential-containers/ex-05-02_4/main.cc 
-    ch05-sequential-containers/ex-05-02_4/student_info.cc 
-    ch05-sequential-containers/ex-05-02_4/grade.cc 
-    ch05-sequential-containers/ex-05-02_4/median.cc 
-    ch05-sequential-containers/ex-05-02_4/read.cc
+    ch05-sequential-containers/ex-05-02_4-vector-list/main.cc 
+    ch05-sequential-containers/ex-05-02_4-vector-list/student_info.cc 
+    ch05-sequential-containers/ex-05-02_4-vector-list/grade.cc 
+    ch05-sequential-containers/ex-05-02_4-vector-list/median.cc 
+    ch05-sequential-containers/ex-05-02_4-vector-list/read.cc
 )
 
 # Chapter 05 Exercise 05
@@ -46,15 +46,15 @@ add_executable(
 # Chapter 05 Exercise 10
 add_executable(
     ex-05-10
-    ch05-sequential-containers/ex-05-10/main.cc
-    ch05-sequential-containers/ex-05-10/palindromes.cc
+    ch05-sequential-containers/ex-05-10-palindromes/main.cc
+    ch05-sequential-containers/ex-05-10-palindromes/palindromes.cc
 )
 
 # Chapter 05 Exercise 11
 add_executable(
     ex-05-11
-    ch05-sequential-containers/ex-05-11/main.cc
-    ch05-sequential-containers/ex-05-11/ascender_descender.cc
-    ch05-sequential-containers/ex-05-11/strvec.cc
-    ch05-sequential-containers/ex-05-11/charvec.cc
+    ch05-sequential-containers/ex-05-11-ascender-descenders/main.cc
+    ch05-sequential-containers/ex-05-11-ascender-descenders/ascender_descender.cc
+    ch05-sequential-containers/ex-05-11-ascender-descenders/strvec.cc
+    ch05-sequential-containers/ex-05-11-ascender-descenders/charvec.cc
 )
