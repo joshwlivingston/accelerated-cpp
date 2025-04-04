@@ -58,3 +58,17 @@ add_executable(
     ch05-sequential-containers/ex-05-11-ascender-descenders/strvec.cc
     ch05-sequential-containers/ex-05-11-ascender-descenders/charvec.cc
 )
+
+# Chapter 06 Section 1.1
+add_executable(
+    sec-06-01-01
+    ch06-algorithms/sec-06-01-01-split/main.cc
+    ch06-algorithms/sec-06-01-01-split/split.cc
+)
+
+# Chapter 06 Section 1.3
+add_executable(
+    sec-06-01-03
+    ch06-algorithms/sec-06-01-03-find-urls/main.cc
+    ch06-algorithms/sec-06-01-03-find-urls/url.cc
+)
