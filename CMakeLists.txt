@@ -73,10 +73,18 @@ add_executable(
     ch06-algorithms/sec-06-01-03-find-urls/url.cc
 )
 
-# Chapter 06 Section 2
+# Chapter 06 Section 02
 add_executable(
     sec-06-02
     ch06-algorithms/sec-06-02/main.cc
     ch06-algorithms/sec-06-02/student_info.cc
     ch06-algorithms/sec-06-02/doublevec.cc
+)
+
+# Chapter 06 Exercise 01
+add_executable(
+    ex-06-01
+    ch06-algorithms/ex-06-01/main.cc
+    ch06-algorithms/ex-06-01/frame.cc
+    ch06-algorithms/ex-06-01/strvec.cc
 )
