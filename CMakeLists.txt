@@ -88,3 +88,10 @@ add_executable(
     ch06-algorithms/ex-06-01/frame.cc
     ch06-algorithms/ex-06-01/strvec.cc
 )
+
+# Chapter 06 Exercises 03-04
+add_executable(
+    ex-06-03_4
+    ch06-algorithms/ex-06-03_4/main.cc
+)
+
