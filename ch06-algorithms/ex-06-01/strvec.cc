@@ -1,10 +1,14 @@
 #include "strvec.h"
 
 #include <algorithm>
+#include <iterator>
 #include <string>
 
+using std::back_inserter;
+using std::copy;
 using std::max;
 using std::string;
+using std::transform;
 
 // Returns the length of the longest string in the vector
 string::size_type width(const strvec &s)
@@ -20,58 +24,50 @@ string::size_type width(const strvec &s)
     return maxlen;
 }
 
-// Concatenate two vectors
-strvec vcat(const strvec &top, const strvec &bottom)
+// Concatenate two vectors. Copies the first input and appends second input to it
+strvec vcat(strvec top, const strvec &bottom)
 {
-    strvec vec_concatenated = top;
-    vec_concatenated.insert(vec_concatenated.end(), bottom.begin(), bottom.end());
-    return vec_concatenated;
+    copy(bottom.begin(), bottom.end(), back_inserter(top));
+    return top;
 }
+
+string::size_type left_side_width;
 
 /*
 Element-wise concatenation of two string vectors.
-Pads whitespace to ensure output strings are of equal length.
+Right pads left side to ensure output strings are vertically aligned.
 */
 strvec hcat(const strvec &left, const strvec &right)
 {
-    strvec vec_concatenated;
-    const string::size_type left_length = left.size();
-    const string::size_type right_length = right.size();
-    const string::size_type max_input_length = max(left_length, right_length);
-    const string::size_type max_left_string_length = width(left);
-    const string::size_type max_right_string_length = width(right);
+    const strvec::size_type longest_input = max(left.size(), right.size());
 
-    for (string::size_type i = 0; i != max_input_length; ++i)
+    strvec left_ = left;
+    strvec right_ = right;
+    if (right.size() == longest_input)
     {
-        string string_concatenated = "";
-
-        string::size_type rpad_length;
-        if (i < left_length)
-        {
-            // if a string exists in left, add it to output
-            string_concatenated = string_concatenated + left[i];
-
-            // set right padding to what is left over from the left side
-            rpad_length = max_left_string_length - left[i].size();
-        }
-        else
-        {
-            // if no string exists in left, set padding to entire width of left side
-            rpad_length = max_left_string_length;
-        }
-
-        // add padding to output to ensure vertical alignment of RHS
-        const string padding(rpad_length, ' ');
-        string_concatenated = string_concatenated + padding;
-
-        if (i < right_length)
-        {
-            // if a string exists at right, add it to the output
-            string_concatenated = string_concatenated  + right[i];
-        }
-
-        vec_concatenated.push_back(string_concatenated);
+        const strvec left_padding = strvec(longest_input - left.size(), "");
+        copy(left_padding.begin(), left_padding.end(), back_inserter(left_));
+    }
+    else
+    {
+        const strvec right_padding = strvec(longest_input - right.size(), "");
+        copy(right_padding.begin(), right_padding.end(), back_inserter(right_));
     }
 
-    return vec_concatenated;
+    left_side_width = width(left);
+
+    strvec out;
+    transform(left_.begin(), left_.end(), right_.begin(), back_inserter(out), concat_with_right_pad);
+
+    return out;
+}
+
+string concat_with_right_pad(string l, string r)
+{
+    return right_pad(l, left_side_width) + r;
+}
+
+string right_pad(const string &s, const string::size_type &out_length)
+{
+    return s + string(out_length - s.size(), ' ');
 }

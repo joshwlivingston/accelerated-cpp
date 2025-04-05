@@ -5,5 +5,6 @@
 #include <vector>
 
 std::vector<std::string> frame(const std::vector<std::string> &);
+std::string create_frame_row_interior(const std::string &);
 
 #endif
