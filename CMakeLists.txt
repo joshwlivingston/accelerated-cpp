@@ -95,11 +95,11 @@ add_executable(
     ch06-algorithms/ex-06-03_4/main.cc
 )
 
-# Chapter 06 Exercise 07
+# Chapter 06 Exercises 07-08
 add_executable(
-    ex-06-07
-    ch06-algorithms/ex-06-07/main.cc
-    ch06-algorithms/ex-06-07/student_info.cc
-    ch06-algorithms/ex-06-07/doublevec.cc
+    ex-06-07_8
+    ch06-algorithms/ex-06-07_8/main.cc
+    ch06-algorithms/ex-06-07_8/student_info.cc
+    ch06-algorithms/ex-06-07_8/doublevec.cc
 )
 
