@@ -132,3 +132,9 @@ add_executable(
     ch07-associative-containers/sec-07-04_05-mad-libs/split.cc
     ch07-associative-containers/sec-07-04_05-mad-libs/random.cc
 )
+
+# Chapter 07 Exercise 01
+add_executable(
+    ex-07-01
+    ch07-associative-containers/ex-07-01/main.cc
+)
