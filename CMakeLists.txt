@@ -123,3 +123,12 @@ add_executable(
     ch07-associative-containers/sec-07-03/split.cc
     ch07-associative-containers/sec-07-03/word_index.cc
 )
+
+# Chapter 07 Section 04
+add_executable(
+    sec-07-04_05
+    ch07-associative-containers/sec-07-04_05-mad-libs/main.cc
+    ch07-associative-containers/sec-07-04_05-mad-libs/mad_libs.cc
+    ch07-associative-containers/sec-07-04_05-mad-libs/split.cc
+    ch07-associative-containers/sec-07-04_05-mad-libs/random.cc
+)
