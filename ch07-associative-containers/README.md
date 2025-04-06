@@ -16,3 +16,11 @@ Associative containers are self-ordering, so algorithms that change the contents
 of containers do not function properly, including reordering algorithms. Instead, 
 associative containers provide several operations impossible to efficiently 
 implement on sequential containers.
+
+A **default argument** allows the programmer to omit the argument if desired:
+```cpp
+// sec-07-03/word_index.h
+word_index build_word_index(
+    std::istream &,
+    std::vector<std::string> f(const std::string &) = split);
+```

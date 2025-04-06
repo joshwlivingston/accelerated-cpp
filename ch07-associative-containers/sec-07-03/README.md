@@ -7,6 +7,3 @@ This functionality is built in `build_word_index()`, in `word_index.cc`.
 
 Our implementation differs slightly from the book, which records the lines as a vector. Using
 the map, however, allows for the same information tob be stored, but more efficiently.
-
-A **default argument** is used in `build_word_index()` (see `word_index.h`), which allows the 
-programmer to omit the argument if desired, as I did in `main.cc`.
