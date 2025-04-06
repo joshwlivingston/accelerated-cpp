@@ -115,3 +115,11 @@ add_executable(
     sec-07-02
     ch07-associative-containers/sec-07-02-counting/main.cc
 )
+
+# Chapter 07 Section 03
+add_executable(
+    sec-07-03
+    ch07-associative-containers/sec-07-03/main.cc
+    ch07-associative-containers/sec-07-03/split.cc
+    ch07-associative-containers/sec-07-03/word_index.cc
+)
