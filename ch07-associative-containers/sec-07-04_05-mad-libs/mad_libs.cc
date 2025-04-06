@@ -14,37 +14,17 @@ using std::logic_error;
 using std::string;
 using std::vector;
 
+/*
+Generates a Mad-Libs style sentence using provided MadLibs ruleset.
+
+A <sentence> rule must be defined in the rule-set for the generator to work.
+*/
 MadLibs generate_mad_libs(const MadLibsRules &mad_libs_rules)
 {
     MadLibs mad_libs;
+    // trigger the recursive mad libs generation
     r_generate_mad_libs(mad_libs_rules, "<sentence>", mad_libs);
     return mad_libs;
-}
-
-void r_generate_mad_libs(const MadLibsRules &mad_libs_rules, const string &word, MadLibs &mad_libs)
-{
-    if (!is_bracketed(word))
-    {
-        mad_libs.push_back(word);
-    }
-    else
-    {
-        MadLibsRules::const_iterator it = mad_libs_rules.find(word);
-        if (it == mad_libs_rules.end())
-        {
-            throw logic_error("Empty rule");
-        }
-
-        const rules rules = it->second;
-        const rule rule_selected = rules[nrand(rules.size())];
-
-        vector<string> rule_words;
-        split(rule_selected, rule_words);
-        for (vector<string>::const_iterator word = rule_words.begin(); word != rule_words.end(); ++word)
-        {
-            r_generate_mad_libs(mad_libs_rules, *word, mad_libs);
-        }
-    }
 }
 
 /*
@@ -80,6 +60,36 @@ void read(istream &in, MadLibsRules &mad_libs_rules)
     while (getline(in, line))
     {
         split(line, mad_libs_rules, false);
+    }
+}
+
+void r_generate_mad_libs(const MadLibsRules &mad_libs_rules, const string &word, MadLibs &mad_libs)
+{
+    if (!is_bracketed(word))
+    {
+        // exit condition: word is not a madlibs rule
+        mad_libs.push_back(word);
+    }
+    else
+    {
+        // obtain list of phrases from rule
+        MadLibsRules::const_iterator mad_libs_rule = mad_libs_rules.find(word);
+        if (mad_libs_rule == mad_libs_rules.end())
+        {
+            throw logic_error("Empty rule");
+        }
+        const rules phrases = mad_libs_rule->second;
+
+        // choose phrase at random from rules
+        const rule phrase_selected = phrases[nrand(phrases.size())];
+
+        // parse each word in chosen phrase
+        vector<string> phrase_words;
+        split(phrase_selected, phrase_words);
+        for (vector<string>::const_iterator word = phrase_words.begin(); word != phrase_words.end(); ++word)
+        {
+            r_generate_mad_libs(mad_libs_rules, *word, mad_libs);
+        }
     }
 }
 
