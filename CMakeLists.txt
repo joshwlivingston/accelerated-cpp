@@ -138,3 +138,13 @@ add_executable(
     ex-07-01
     ch07-associative-containers/ex-07-01/main.cc
 )
+
+# Chapter 07 Exercise 02
+add_executable(
+    ex-07-02
+    ch07-associative-containers/ex-07-02/main.cc
+    ch07-associative-containers/ex-07-02/student_info.cc
+    ch07-associative-containers/ex-07-02/doublevec.cc
+    ch07-associative-containers/ex-07-02/grade.cc
+    ch07-associative-containers/ex-07-02/median.cc
+)
