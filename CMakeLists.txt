@@ -109,3 +109,9 @@ add_executable(
     ch06-algorithms/ex-06-09/main.cc
     ch06-algorithms/ex-06-09/concat.cc
 )
+
+# Chapter 07 Section 02
+add_executable(
+    sec-07-02
+    ch07-associative-containers/sec-07-02-counting/main.cc
+)
