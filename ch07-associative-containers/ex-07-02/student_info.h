@@ -1,10 +1,12 @@
 #ifndef GUARD_student_info_h
 #define GUARD_student_info_h
 
-// student_info.h
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
+
+#include "grade.h"
 
 // main.cpp
 
@@ -17,9 +19,16 @@ struct StudentInfo
     std::vector<double> homework; // Student's homework scores
 };
 
-char letter_grade(const StudentInfo &);
-double grade(const StudentInfo &);
-bool compare_by_name(const StudentInfo &student_x, const StudentInfo &student_y);
-std::istream &read(std::istream &stream_in, std::ostream &stream_out, StudentInfo &student);
+typedef std::vector<StudentInfo> Students;
+typedef std::map<LetterGrade, Students> StudentsByLetterGrade;
+typedef std::map<LetterGrade, int> CountsByLetterGrade;
+
+void get_letter_grades(const Students &, StudentsByLetterGrade &);
+void get_letter_grades(const Students &, CountsByLetterGrade &);
+
+LetterGrade letter_grade(const StudentInfo &);
+Grade grade(const StudentInfo &);
+bool compare_by_name(const StudentInfo &, const StudentInfo &);
+std::istream &read(std::istream &, std::ostream &, StudentInfo &);
 
 #endif

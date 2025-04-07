@@ -1,6 +1,7 @@
 #include "student_info.h"
 
 #include <iostream>
+#include <map>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -9,20 +10,41 @@
 #include "grade.h"
 
 using std::istream;
+using std::map;
 using std::ostream;
 using std::runtime_error;
 using std::string;
 using std::vector;
 
-char letter_grade(const StudentInfo &student)
+void get_letter_grades(const Students &students, StudentsByLetterGrade &result)
+{
+    Students::const_iterator student = students.begin();
+    while (student != students.end())
+    {
+        result[letter_grade(*student)].push_back(*student);
+        ++student;
+    }
+}
+
+void get_letter_grades(const Students &students, CountsByLetterGrade &result)
+{
+    Students::const_iterator student = students.begin();
+    while (student != students.end())
+    {
+        ++result[letter_grade(*student)];
+        ++student;
+    }
+}
+
+LetterGrade letter_grade(const StudentInfo &student)
 {
     return letter_grade(grade(student));
 }
 
 // Compute the final grade for a student
-double grade(const StudentInfo &s)
+Grade grade(const StudentInfo &student)
 {
-    return grade(s.midterm, s.final, s.homework);
+    return grade(student.midterm, student.final, student.homework);
 }
 
 // compare() is to be used as predicate to sort(StudentInfo)
@@ -48,10 +70,13 @@ istream &read(
 {
     // first, read the studen's name
     string name;
+    stream_in >> name;
     if (name != "end" && name != "exit")
     {
         student.name = name;
         stream_in >> student.midterm >> student.final;
+
+        student.homework.clear();
         read(stream_in, student.homework);
     }
     else

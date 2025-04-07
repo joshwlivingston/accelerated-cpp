@@ -12,3 +12,13 @@ F < 60
 ```
 
 The output should list how many students fall into each category.
+
+### Answer
+The letter grade calculation is implemented in `grace.cc`, and the output
+is a map implemented in `student_info.cc`:
+```cpp
+void get_letter_grades(const Students &students, CountsByLetterGrade &result)
+{
+    ...
+}
+```

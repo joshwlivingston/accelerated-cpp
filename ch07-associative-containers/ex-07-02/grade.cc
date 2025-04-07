@@ -9,7 +9,7 @@ using std::domain_error;
 using std::vector;
 
 // Calculates the final grade, provided a midterm grade, final exam grade, and a vector of homework grades
-double grade(const double midterm, const double final, const vector<double> &homework)
+Grade grade(const double midterm, const double final, const vector<double> &homework)
 {
     if (homework.size() == 0)
     {
@@ -19,12 +19,12 @@ double grade(const double midterm, const double final, const vector<double> &hom
 }
 
 // Applies the correct weighting to the midterm grade, final exam grade, and overall homework grade to calculate final grade
-double grade(const double midterm, const double final, const double homework)
+Grade grade(const double midterm, const double final, const double homework)
 {
     return 0.2 * midterm + 0.4 * final + 0.4 * homework;
 }
 
-char letter_grade(double grade)
+LetterGrade letter_grade(Grade grade)
 {
     if (grade < 60)
     {
