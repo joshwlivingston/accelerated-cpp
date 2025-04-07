@@ -149,6 +149,15 @@ add_executable(
     ch07-associative-containers/ex-07-02/median.cc
 )
 
+# Chapter 07 Exercise 06
+add_executable(
+    ex-07-06
+    ch07-associative-containers/ex-07-06-mad-libs-no-recursion/main.cc
+    ch07-associative-containers/ex-07-06-mad-libs-no-recursion/mad_libs.cc
+    ch07-associative-containers/ex-07-06-mad-libs-no-recursion/split.cc
+    ch07-associative-containers/ex-07-06-mad-libs-no-recursion/random.cc
+)
+
 # Chapter 07 Exercise 08
 add_executable(
     ex-07-08
