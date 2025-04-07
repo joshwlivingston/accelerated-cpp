@@ -148,3 +148,12 @@ add_executable(
     ch07-associative-containers/ex-07-02/grade.cc
     ch07-associative-containers/ex-07-02/median.cc
 )
+
+# Chapter 07 Exercise 08
+add_executable(
+    ex-07-08
+    ch07-associative-containers/ex-07-08/main.cc
+    ch07-associative-containers/ex-07-08/word_index.cc
+    ch07-associative-containers/ex-07-08/url.cc
+    ch07-associative-containers/ex-07-08/split.cc
+)
