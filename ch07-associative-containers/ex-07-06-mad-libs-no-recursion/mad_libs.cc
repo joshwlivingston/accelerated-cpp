@@ -26,7 +26,7 @@ MadLibs generate_mad_libs(const MadLibsRules &mad_libs_rules)
     // trigger mad libs generation using the <sentence> rule
     vector<string> rule_stack(1, "<sentence>");
 
-    // invariant: we have processed i rules
+    // invariant: we have processed i rules from the stack
     vector<string>::size_type i = 0;
     while (i != rule_stack.size())
     {
@@ -94,7 +94,7 @@ MadLibs generate_mad_libs(const MadLibsRules &mad_libs_rules)
             const rule portion_of_rule_still_unparsed = char_end == rule_stack[i].end() ? "" : string(char_end, rule_stack[i].end());
 
             rule_stack.push_back(newly_obtained_rule + portion_of_rule_still_unparsed);
-            char_start = rule_stack[i].end();
+            break;
         }
         ++i;
     }
