@@ -52,20 +52,11 @@ MadLibs generate_mad_libs(const MadLibsRules &mad_libs_rules)
 
                 // continue scanning the rule
                 char_start = output_char_end;
-            }
-
-            /*
-            Now, we are either at the end of the string or at a '<'
-            */
-
-            if (char_start == rule_stack[i].end())
-            {
-                // proceed to next rule if we are at end of string
                 continue;
             }
 
             /*
-            If we are not at the end of string, then, this character is a '<'.
+            If we are here, then this character is a '<'.
 
             So, we should look for a MadLibs rule tag.
             */
