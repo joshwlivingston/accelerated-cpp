@@ -166,3 +166,10 @@ add_executable(
     ch07-associative-containers/ex-07-08/url.cc
     ch07-associative-containers/ex-07-08/split.cc
 )
+
+# Chapter 07 Exercise 09
+add_executable(
+    ex-07-09
+    ch07-associative-containers/ex-07-09/main.cc
+    ch07-associative-containers/ex-07-09/random.cc
+)
