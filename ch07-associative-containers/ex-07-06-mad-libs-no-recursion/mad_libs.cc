@@ -90,9 +90,7 @@ MadLibs generate_mad_libs(const MadLibsRules &mad_libs_rules)
             So, we need to obtain a random rule from the list and add it to the rule stack.
             */
             const rule newly_obtained_rule = rule_list->second[nrand(rule_list->second.size())];
-
             const rule portion_of_rule_still_unparsed = char_end == rule_stack[i].end() ? "" : string(char_end, rule_stack[i].end());
-
             rule_stack.push_back(newly_obtained_rule + portion_of_rule_still_unparsed);
             break;
         }
