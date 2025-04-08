@@ -28,42 +28,40 @@ MadLibs generate_mad_libs(const MadLibsRules &mad_libs_rules)
         string::iterator char_start = find_if(rule_stack[i].begin(), rule_stack[i].end(), is_not_space);
         while (char_start != rule_stack[i].end())
         {
-            if (!is_bracket_opener(*char_start))
+            if (is_bracket_opener(*char_start))
             {
-                /*
-                We are not inside a MadLibs rule tag.
-                So, we should find the end of this string and add it to the output.
-                The end of this string is marked by the position of the next '<' in the rule.
-                */
-                const string::iterator char_end = find_if(char_start, rule_stack[i].end(), is_bracket_opener);
-                mad_libs.push_back(string(char_start, char_end));
-                char_start = char_end;
-                continue;
+                const string::iterator rule_tag_ending_space = find_if(char_start, rule_stack[i].end(), is_space);
+                if (is_bracket_closer(*(rule_tag_ending_space - 1)))
+                {
+                    const MadLibsRules::const_iterator rule_list = mad_libs_rules.find(string(char_start, rule_tag_ending_space));
+                    if (rule_list != mad_libs_rules.end())
+                    {
+                        /*
+                        If reach here, we have stumbled upon a MadLibs rule entry, and need to process it.
+                        So, we need to obtain a random rule from the list and add it to the rule stack.
+                        */
+                        const rule newly_obtained_rule = rule_list->second[nrand(rule_list->second.size())];
+                        const rule portion_of_rule_still_unparsed = rule_tag_ending_space == rule_stack[i].end() ? "" : string(rule_tag_ending_space + 1, rule_stack[i].end());
+                        rule_stack.push_back(newly_obtained_rule + " " + portion_of_rule_still_unparsed);
+                        break;
+                    }
+                }
             }
             /*
-            If we are here, then this character is a '<'.
-            So, we should look for a MadLibs rule tag.
+            The beginning of the string is not a valid rule tag.
+            So, add portion of string until we find a rule tag to MadLibs output
             */
-            const string::iterator char_end = find_if(char_start, rule_stack[i].end(), is_space);
-            const MadLibsRules::const_iterator rule_list = mad_libs_rules.find(string(char_start, char_end));
-            if (!is_bracket_closer(*(char_end - 1)) || rule_list == mad_libs_rules.end())
+            string::iterator next_potential_rule_start = find_if(char_start, rule_stack[i].end(), is_bracket_opener);
+            while (char_start == next_potential_rule_start || (!is_space(*(next_potential_rule_start - 1)) && next_potential_rule_start != rule_stack[i].end()))
             {
                 /*
-                Last character in this word is not '>' OR this <tag> is not a valid MadLibs rule entry.
-                So, we should add this portion of the rule to the mad_libs output and continue scanning the string.
+                char_start is < but we are not in a tag, OR we have found a <, but the preceding character is not a space and we are not at the end
+                So, we should continue scanning for another valid <
                 */
-                mad_libs.push_back(string(char_start, char_end));
-                char_start = char_end;
-                continue;
+                next_potential_rule_start = find_if(next_potential_rule_start + 1, rule_stack[i].end(), is_bracket_opener);
             }
-            /*
-            If reach here, we have stumbled upon a MadLibs rule entry, and need to process it.
-            So, we need to obtain a random rule from the list and add it to the rule stack.
-            */
-            const rule newly_obtained_rule = rule_list->second[nrand(rule_list->second.size())];
-            const rule portion_of_rule_still_unparsed = char_end == rule_stack[i].end() ? "" : string(char_end, rule_stack[i].end());
-            rule_stack.push_back(newly_obtained_rule + portion_of_rule_still_unparsed);
-            break;
+            mad_libs.push_back(string(char_start, next_potential_rule_start));
+            char_start = next_potential_rule_start;
         }
         ++i;
     }

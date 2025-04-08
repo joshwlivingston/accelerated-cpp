@@ -65,12 +65,13 @@ int main()
     srand(time(0));
     MadLibs mad_libs = generate_mad_libs(mad_libs_rules);
 
-
     cout << endl
          << "Generated sentence:" << endl;
-    for (MadLibs::const_iterator mad_libs_part = mad_libs.begin(); mad_libs_part != mad_libs.end(); ++mad_libs_part)
+    MadLibs::const_iterator mad_libs_part = mad_libs.begin();
+    while (mad_libs_part != mad_libs.end())
     {
         cout << *mad_libs_part;
+        ++mad_libs_part;
     }
 
     cout << endl;
