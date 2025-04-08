@@ -2,25 +2,15 @@
 
 #include <algorithm>
 #include <iostream>
-#include <iterator>
-#include <list>
-#include <stdexcept>
 #include <string>
 #include <vector>
 
 #include "random.h"
 #include "split.h"
 
-using std::back_inserter;
-using std::copy;
-using std::end;
-using std::find;
 using std::find_if;
 using std::getline;
 using std::istream;
-using std::list;
-using std::logic_error;
-using std::reverse_copy;
 using std::string;
 using std::vector;
 
