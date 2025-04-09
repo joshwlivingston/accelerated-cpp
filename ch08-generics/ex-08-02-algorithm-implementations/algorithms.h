@@ -46,8 +46,7 @@ InputIteratorInput find(
     InputIteratorInput end,
     const TypeInput &match)
 {
-    while (begin != end && *begin != match)
-        ++begin;
+    while (begin != end && *begin++ != match);
     return begin;
 }
 
@@ -59,8 +58,7 @@ InputIteratorInput find_if(
     InputIteratorInput end,
     bool predicate(const TypeInput &))
 {
-    while (begin != end && !predicate(*begin))
-        ++begin;
+    while (begin != end && !predicate(*begin++));
     return begin;
 }
 
@@ -158,11 +156,11 @@ ForwardIteratorInput partition(
     ForwardIteratorInput end,
     bool predicate(const TypeInput &))
 {
-    ForwardIteratorInput first_false = ex0802::find_if(begin, end, predicate);
-    for (ForwardIteratorInput current = first_false; current != end; ++current)
-        if (predicate(*current))
-            std::swap(*first_false++, *current);
-    return first_false;
+    ForwardIteratorInput true_partition_end = ex0802::find_if(begin, end, predicate);
+    for (begin = true_partition_end; begin != end; ++begin)
+        if (predicate(*begin))
+            std::swap(*true_partition_end++, *begin);
+    return true_partition_end;
 }
 
 /* Computes the sum of the given value init and the elements in the range

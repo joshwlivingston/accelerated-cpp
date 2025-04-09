@@ -185,5 +185,5 @@ add_executable(
 # Chapter 08 Exercise 02
 add_executable(
     ex-08-02
-    ch08-generics/ex-08-02/main.cc
+    ch08-generics/ex-08-02-algorithm-implementations/main.cc
 )
