@@ -18,6 +18,11 @@
 - `partition(b, e, p)`
 - `accumulate(b, e, t)`
 
+### Answer
+I implemented all templates in `algorithms.h`, where I tried to conform to the
+[Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html),
+especially with regards to whitespace management.
+
 `main.cc` output:
 ```
 C:\projects\accelerated-cpp\build>ex-08-02
