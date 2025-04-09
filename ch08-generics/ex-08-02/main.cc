@@ -56,7 +56,8 @@ int main()
     // search(b, e, b2, e2)
     vec_1.clear();
     vec_2.clear();
-    cout << "search() test. input first vector, "
+    cout << endl
+         << "search() test. input first vector, "
             "then \"next\" to input search vector. "
             "\"pass\" to skip."
          << endl;
@@ -85,7 +86,8 @@ int main()
     // find(b, e, t)
     vec_1.clear();
     vec_2.clear();
-    cout << "find() test. input first vector, "
+    cout << endl
+         << "find() test. input first vector, "
             "then \"next\" to input match string. "
             "\"pass\" to skip."
          << endl;
@@ -111,7 +113,8 @@ int main()
     // find_if(b, e, p)
     vec_1.clear();
     vec_2.clear();
-    cout << "find_if() test. searching for j's. "
+    cout << endl
+         << "find_if() test. searching for j's. "
             "input vector, then \"end\" to stop. "
             "\"pass\" to skip."
          << endl;
@@ -137,7 +140,8 @@ int main()
     // copy(b, e, d)
     vec_1.clear();
     vec_2.clear();
-    cout << "copy() test. "
+    cout << endl
+         << "copy() test. "
             "input vector, then \"end\" to stop. "
             "\"pass\" to skip."
          << endl;
@@ -162,7 +166,8 @@ int main()
     // remove_copy(b, e, d, t)
     vec_1.clear();
     vec_2.clear();
-    cout << "remove_copy() test. checking for j's "
+    cout << endl
+         << "remove_copy() test. checking for j's "
             "input vector, then \"end\" to stop. "
             "\"pass\" to skip."
          << endl;
@@ -189,7 +194,8 @@ int main()
     // remove_copy_if(b, e, d, p)
     vec_1.clear();
     vec_2.clear();
-    cout << "remove_copy_if() test. checking for j's "
+    cout << endl
+         << "remove_copy_if() test. checking for j's "
             "input vector, then \"end\" to stop. "
             "\"pass\" to skip."
          << endl;
@@ -216,7 +222,8 @@ int main()
     // remove(b, e, t)
     vec_1.clear();
     vec_2.clear();
-    cout << "remove() test. checking for j's "
+    cout << endl
+         << "remove() test. checking for j's "
             "input vector, then \"end\" to stop. "
             "\"pass\" to skip."
          << endl;
@@ -241,7 +248,8 @@ int main()
     // transform(b, e, d, f)
     vec_1.clear();
     vec_2.clear();
-    cout << "transform() test. checking for j's. "
+    cout << endl
+         << "transform() test. checking for j's. "
             "input vector, then \"end\" to stop. "
             "\"pass\" to skip."
          << endl;
@@ -271,7 +279,9 @@ int main()
     // partition(b, e, p)
     vec_1.clear();
     vec_2.clear();
-    cout << "partition() test. sorting by j's "
+    cout << endl
+         << endl
+         << "partition() test. sorting by j's "
             "input vector, then \"end\" to stop. "
             "\"pass\" to skip."
          << endl;
@@ -295,7 +305,8 @@ int main()
     // accumulate(b, e, t)
     vec_1.clear();
     vec_2.clear();
-    cout << "accumulate() test. "
+    cout << endl
+         << "accumulate() test. "
             "input vector, then \"end\" to stop. "
             "\"pass\" to skip."
          << endl;
