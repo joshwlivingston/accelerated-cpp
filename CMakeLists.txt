@@ -191,5 +191,5 @@ add_executable(
 # Chapter 08 Exercise 04
 add_executable(
     ex-08-04
-    ch08-generics/ex-08-04/main.cc
+    ch08-generics/ex-08-04-swap/main.cc
 )
