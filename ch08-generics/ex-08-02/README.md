@@ -17,3 +17,183 @@
 - `transform(b, e, d, f)`
 - `partition(b, e, p)`
 - `accumulate(b, e, t)`
+
+`main.cc` output:
+```
+C:\projects\accelerated-cpp\build>ex-08-02
+equal() test. input first vector, then "next" to input next vector. "pass" to skip.
+j
+o
+s
+h
+next
+
+Input second vector, then "end" to stop
+j
+o
+h
+n
+end
+0
+
+search() test. input first vector, then "next" to input search vector. "pass" to skip.
+j
+o
+s
+h
+next
+
+Input search vector, then "end" to stop
+j
+o
+h
+n
+end
+j
+
+find() test. input first vector, then "next" to input match string. "pass" to skip.
+j
+o
+s
+h
+next
+
+Input match string.
+j
+
+j
+
+find_if() test. searching for j's. input vector, then "end" to stop. "pass" to skip.
+j
+o
+s
+h
+end
+
+Searching for j's...
+found one!
+
+copy() test. input vector, then "end" to stop. "pass" to skip.
+j
+o
+s
+h
+end
+
+destination vector:
+j
+o
+s
+h
+
+remove_copy() test. checking for j's input vector, then "end" to stop. "pass" to skip.
+j
+o
+s
+h
+j
+o
+s
+h
+end
+
+destination vector:
+o
+s
+h
+o
+s
+h
+
+remove_copy_if() test. checking for j's input vector, then "end" to stop. "pass" to skip.
+j
+o
+s
+h
+j
+o
+s
+h
+end
+
+destination vector:
+o
+s
+h
+o
+s
+h
+
+remove() test. checking for j's input vector, then "end" to stop. "pass" to skip.
+j
+o
+s
+h
+j
+o
+s
+h
+end
+
+new vector:
+o
+s
+h
+o
+s
+h
+
+transform() test. checking for j's. input vector, then "end" to stop. "pass" to skip.
+j
+o
+s
+h
+j
+o
+h
+n
+end
+
+destination vector:
+1
+0
+0
+0
+1
+0
+0
+0
+
+
+partition() test. sorting by j's input vector, then "end" to stop. "pass" to skip.
+j
+o
+s
+h
+j
+o
+h
+n
+end
+
+partitioned vector:
+j
+j
+s
+h
+o
+o
+h
+n
+
+accumulate() test. input vector, then "end" to stop. "pass" to skip.
+j
+o
+s
+h
+!
+end
+
+Accumulated string:
+josh!
+```
