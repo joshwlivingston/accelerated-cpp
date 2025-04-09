@@ -28,13 +28,12 @@ ForwardIteratorInput search(
     ForwardIteratorMatches matches_begin,
     ForwardIteratorMatches matches_end)
 {
-    while (begin != end)
+    for (; begin != end; ++begin)
     {
         ForwardIteratorMatches match_current = matches_begin;
         while (match_current != matches_end)
-            if (*begin == *match_current++)
-                break;
-        ++begin;
+            if (*begin == *match_current)
+                return begin;
     }
     return begin;
 }
@@ -42,7 +41,10 @@ ForwardIteratorInput search(
 /* Returns an iterator to the first element in the range [begin, end) that
    is equal to match (or last if there is no such iterator) */
 template <class FowardIterator, class InputValue>
-FowardIterator find(FowardIterator begin, FowardIterator end, const InputValue &match)
+FowardIterator find(
+    FowardIterator begin,
+    FowardIterator end,
+    const InputValue &match)
 {
     while (begin != end && *begin != match)
         ++begin;
@@ -52,7 +54,10 @@ FowardIterator find(FowardIterator begin, FowardIterator end, const InputValue &
 /* Returns an iterator to the first element in the range [begin, end) for
    which predicate() is true (or last if there is no such iterator) */
 template <class FowardIterator, class InputValue>
-FowardIterator find_if(FowardIterator begin, FowardIterator end, bool predicate(InputValue))
+FowardIterator find_if(
+    FowardIterator begin,
+    FowardIterator end,
+    bool predicate(InputValue))
 {
     while (begin != end && !predicate(*begin))
         ++begin;
@@ -75,38 +80,38 @@ ForwardIteratorDestination copy(
 /* Copies the elements in the range, defined by [begin, end), to another range
    beginning at destination_begin (copy destination range), omitting elements
    equal to match. */
-template <class ForwardIteratorInput, class InputType, class ForwardIteratorDestination>
+template <
+    class ForwardIteratorInput,
+    class InputType,
+    class ForwardIteratorDestination>
 ForwardIteratorDestination remove_copy(
     ForwardIteratorInput begin,
     ForwardIteratorInput end,
     ForwardIteratorDestination destination_begin,
     const InputType &match)
 {
-    while (begin != end)
-    {
+    for (; begin != end; ++begin)
         if (*begin != *match)
             *destination_begin++ = *begin;
-        ++begin;
-    }
     return destination_begin;
 }
 
 /* Copies the elements in the range, defined by [begin, end), to another range
    beginning at destination_begin (copy destination range), omitting elements
    for which predicate() is true. */
-template <class ForwardIteratorInput, class InputType, class ForwardIteratorDestination>
+template <
+    class ForwardIteratorInput,
+    class InputType,
+    class ForwardIteratorDestination>
 ForwardIteratorDestination remove_copy_if(
     ForwardIteratorInput begin,
     ForwardIteratorInput end,
     ForwardIteratorDestination destination_begin,
     bool predicate(const InputType &))
 {
-    while (begin != end)
-    {
+    for (; begin != end; ++begin)
         if (!predicate(begin))
             destination_begin++ = begin;
-        ++begin;
-    }
     return destination_begin;
 }
 
