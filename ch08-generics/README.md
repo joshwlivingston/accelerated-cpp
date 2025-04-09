@@ -46,7 +46,7 @@ corresponsing to a distinct **iterator category**.
 2. An **output iterator** provides **sequential write-only access** and supports the 
    following operations: `++` (prefix and postfix), `*` (dereference operator 
    for writing only), and `=`
-3. A **forward iterator** provides **sequential read-only access** and supports all 
+3. A **forward iterator** provides **sequential read-write access** and supports all 
    *input iterator* and *output iterator* operations.
 4. A **bidirectional iterator** provides **forward and backward read-write access**, 
    supporting all *forward iterator* operations and `--`, used for decrementing the
