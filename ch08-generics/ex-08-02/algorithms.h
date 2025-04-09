@@ -161,7 +161,7 @@ ForwardIterator partition(
     ForwardIterator first_false = find_if(begin, end, predicate);
     for (ForwardIterator current = first_false; current != end; ++current)
         if (predicate(*current))
-            *first_false++ = std::move(*current);
+            std::swap(*first_false++, *current);
     return first_false;
 }
 
