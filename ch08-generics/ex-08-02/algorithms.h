@@ -123,7 +123,7 @@ ForwardIterator remove(
     ForwardIterator end,
     const InputType &match)
 {
-    ForwardIterator first_removed = find(begin, end, match);
+    ForwardIteratorInput first_removed = ex0802::find(begin, end, match);
     for (begin = first_removed; begin != end; ++begin)
         if (*begin != match)
             *first_removed++ = std::move(*begin);
@@ -158,8 +158,8 @@ ForwardIterator partition(
     ForwardIterator end,
     bool predicate(const T &))
 {
-    ForwardIterator first_false = find_if(begin, end, predicate);
-    for (ForwardIterator current = first_false; current != end; ++current)
+    ForwardIteratorInput first_false = ex0802::find_if(begin, end, predicate);
+    for (ForwardIteratorInput current = first_false; current != end; ++current)
         if (predicate(*current))
             std::swap(*first_false++, *current);
     return first_false;
