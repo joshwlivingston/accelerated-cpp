@@ -32,7 +32,7 @@ ForwardIteratorInput search(
     {
         ForwardIteratorMatches match_current = matches_begin;
         while (match_current != matches_end)
-            if (*begin == *match_current)
+            if (*begin == *match_current++)
                 return begin;
     }
     return begin;
@@ -57,7 +57,7 @@ template <class FowardIterator, class InputValue>
 FowardIterator find_if(
     FowardIterator begin,
     FowardIterator end,
-    bool predicate(InputValue))
+    bool predicate(const InputValue &))
 {
     while (begin != end && !predicate(*begin))
         ++begin;
@@ -82,8 +82,8 @@ ForwardIteratorDestination copy(
    equal to match. */
 template <
     class ForwardIteratorInput,
-    class InputType,
-    class ForwardIteratorDestination>
+    class ForwardIteratorDestination,
+    class InputType>
 ForwardIteratorDestination remove_copy(
     ForwardIteratorInput begin,
     ForwardIteratorInput end,
@@ -91,7 +91,7 @@ ForwardIteratorDestination remove_copy(
     const InputType &match)
 {
     for (; begin != end; ++begin)
-        if (*begin != *match)
+        if (*begin != match)
             *destination_begin++ = *begin;
     return destination_begin;
 }
@@ -101,8 +101,8 @@ ForwardIteratorDestination remove_copy(
    for which predicate() is true. */
 template <
     class ForwardIteratorInput,
-    class InputType,
-    class ForwardIteratorDestination>
+    class ForwardIteratorDestination,
+    class InputType>
 ForwardIteratorDestination remove_copy_if(
     ForwardIteratorInput begin,
     ForwardIteratorInput end,
@@ -110,24 +110,42 @@ ForwardIteratorDestination remove_copy_if(
     bool predicate(const InputType &))
 {
     for (; begin != end; ++begin)
-        if (!predicate(begin))
-            destination_begin++ = begin;
+        if (!predicate(*begin))
+            *destination_begin++ = *begin;
     return destination_begin;
 }
 
 /* Removes all elements that equal match from the range [begin, end) and
    returns a past-the-end iterator for the new end of the range. */
-template <class ForwardIterator, class T>
+template <class ForwardIterator, class InputType>
 ForwardIterator remove(
     ForwardIterator begin,
     ForwardIterator end,
-    const T &match)
+    const InputType &match)
 {
     ForwardIterator first_removed = find(begin, end, match);
     for (begin = first_removed; begin != end; ++begin)
         if (*begin != match)
             *first_removed++ = std::move(*begin);
     return first_removed;
+}
+
+/* Applies the given function to the the range [begin, end), and
+   stores the result in an output range starting from begin_destination */
+template <
+    class ForwardIteratorInput,
+    class ForwardIteratorDestination,
+    class TypeInput,
+    class TypeOutput>
+ForwardIteratorDestination transform(
+    ForwardIteratorInput begin,
+    ForwardIteratorInput end,
+    ForwardIteratorDestination begin_destination,
+    TypeOutput transform_function(const TypeInput &))
+{
+    while (begin != end)
+        *begin_destination++ = transform_function(*begin++);
+    return begin_destination;
 }
 
 /* Reorders the elements in the range [begin, end) in such a way that all
