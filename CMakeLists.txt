@@ -193,3 +193,12 @@ add_executable(
     ex-08-04
     ch08-generics/ex-08-04-swap/main.cc
 )
+
+# Chapter 08 Exercise 05
+add_executable(
+    ex-08-05
+    ch08-generics/ex-08-05-mad-libs-iterators/main.cc
+    ch08-generics/ex-08-05-mad-libs-iterators/mad_libs.cc
+    ch08-generics/ex-08-05-mad-libs-iterators/random.cc
+    ch08-generics/ex-08-05-mad-libs-iterators/utils.cc
+)
