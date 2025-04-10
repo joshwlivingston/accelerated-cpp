@@ -20,7 +20,20 @@ void read(std::istream &, MadLibsRules &);
 void split(const std::string &, MadLibsRules &, const bool);
 
 void resolve_leading_rule_tags(rule &, const MadLibsRules &);
-rule::iterator get_next_start(const rule::iterator, const rule::iterator);
+
+/* Finds the start of the next potential rule tag. Ignores the first '<' found
+   if string starts with '<'. Do not use this function to process rule tags.
+   Instead, use resolve_leading_rule_tags(). */
+template <class OutputIterator>
+rule::iterator get_next_start(
+    rule::iterator begin,
+    rule::iterator end,
+    OutputIterator destination)
+{
+    while (begin != end && !is_bracket_open(*begin))
+        *destination++ = *begin++;
+    return begin;
+}
 
 /* Generates a Mad-Libs style sentence using provided MadLibs ruleset.
    A <sentence> rule must be defined in the rule-set for the generator to
@@ -34,9 +47,8 @@ OutputIterator generate_mad_libs(
     while (rule_stack.begin() != rule_stack.end())
     {
         resolve_leading_rule_tags(rule_stack, rules);
-        const rule::iterator next_start =
-            get_next_start(rule_stack.begin(), rule_stack.end());
-        *destination++ = std::string(rule_stack.begin(), next_start);
+        rule::iterator next_start = get_next_start<OutputIterator>(
+            rule_stack.begin(), rule_stack.end(), destination);
         rule_stack = std::string(next_start, rule_stack.end());
     }
     return destination;

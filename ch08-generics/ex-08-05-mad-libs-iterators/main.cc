@@ -44,8 +44,7 @@ int main()
     read(std::cin, mad_libs_rules);
 
     std::cout << "Directly streamed result: " << std::endl;
-    generate_mad_libs<
-        std::ostream_iterator<std::string>>(std::cout, mad_libs_rules);
+    generate_mad_libs<std::ostream_iterator<char>>(std::cout, mad_libs_rules);
     std::cout << std::endl;
 
     int i = 0;
@@ -55,13 +54,20 @@ int main()
         std::chrono::steady_clock::time_point start =
             std::chrono::steady_clock::now();
 
-        std::vector<std::string> mad_libs;
-        generate_mad_libs<std::back_insert_iterator<std::vector<std::string>>>(
+        std::vector<char> mad_libs;
+        generate_mad_libs<std::back_insert_iterator<std::vector<char>>>(
             std::back_inserter(mad_libs), mad_libs_rules);
 
         std::chrono::steady_clock::time_point end =
             std::chrono::steady_clock::now();
         times_vec[i] = end - start;
+        if (i == 0)
+        {
+            std::vector<char>::const_iterator it = mad_libs.begin();
+            while (it != mad_libs.end())
+                std::cout << *it++;
+            std::cout << std::endl;
+        }
     }
     std::cout << std::endl
               << "Avg time (vector): "
@@ -79,13 +85,20 @@ int main()
         std::chrono::steady_clock::time_point start =
             std::chrono::steady_clock::now();
 
-        std::list<std::string> mad_libs;
-        generate_mad_libs<std::back_insert_iterator<std::list<std::string>>>(
-            std::back_inserter(mad_libs), mad_libs_rules);
+        std::list<char> mad_libs_list;
+        generate_mad_libs<std::back_insert_iterator<std::list<char>>>(
+            std::back_inserter(mad_libs_list), mad_libs_rules);
 
         std::chrono::steady_clock::time_point end =
             std::chrono::steady_clock::now();
         times_list[i] = end - start;
+        if (i == 0)
+        {
+            std::list<char>::const_iterator it = mad_libs_list.begin();
+            while (it != mad_libs_list.end())
+                std::cout << *it++;
+            std::cout << std::endl;
+        }
     }
     std::cout << std::endl
               << "Avg time (list): "
@@ -93,6 +106,37 @@ int main()
                      std::vector<std::chrono::nanoseconds>::const_iterator,
                      std::chrono::nanoseconds>(
                      times_list.begin(), times_list.end(), kZeroNanoseconds)
+                         .count() /
+                     kNTimes;
+
+    i = 0;
+    std::vector<std::chrono::nanoseconds> times_str(kNTimes);
+    while (i++ != kNTimes)
+    {
+        std::chrono::steady_clock::time_point start =
+            std::chrono::steady_clock::now();
+
+        std::string mad_libs_str;
+        generate_mad_libs<std::back_insert_iterator<std::string>>(
+            std::back_inserter(mad_libs_str), mad_libs_rules);
+
+        std::chrono::steady_clock::time_point end =
+            std::chrono::steady_clock::now();
+        times_str[i] = end - start;
+        if (i == 0)
+        {
+            std::string::const_iterator it = mad_libs_str.begin();
+            while (it != mad_libs_str.end())
+                std::cout << *it++;
+            std::cout << std::endl;
+        }
+    }
+    std::cout << std::endl
+              << "Avg time (string): "
+              << ex0802::accumulate<
+                     std::vector<std::chrono::nanoseconds>::const_iterator,
+                     std::chrono::nanoseconds>(
+                     times_str.begin(), times_str.end(), kZeroNanoseconds)
                          .count() /
                      kNTimes;
 }

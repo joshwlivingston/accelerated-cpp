@@ -97,8 +97,7 @@ void split(
 void resolve_leading_rule_tags(rule &rule_stack, const MadLibsRules &rules)
 {
     while (
-        rule_stack.begin() != rule_stack.end()
-        && is_bracket_open(*rule_stack.begin()))
+        rule_stack.begin() != rule_stack.end() && is_bracket_open(*rule_stack.begin()))
     {
         // locate end of current word
         const rule::iterator rule_tag_ending_space =
@@ -123,14 +122,4 @@ void resolve_leading_rule_tags(rule &rule_stack, const MadLibsRules &rules)
             // append unparsed portion of rule_stack to newly chosen rule
             + std::string(rule_tag_ending_space, rule_stack.end());
     }
-}
-
-/* Finds the start of the next potential rule tag. Ignores the first '<' found
-   if string starts with '<'. Do not use this function to process rule tags.
-   Instead, use resolve_leading_rule_tags(). */
-rule::iterator get_next_start(rule::iterator begin, const rule::iterator end)
-{
-    if (is_bracket_open(*begin))
-        ++begin;
-    return ex0802::find_if<rule::iterator, char>(begin, end, is_bracket_open);
 }
