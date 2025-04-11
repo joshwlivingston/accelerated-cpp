@@ -202,3 +202,10 @@ add_executable(
     ch08-generics/ex-08-05-mad-libs-iterators/random.cc
     ch08-generics/ex-08-05-mad-libs-iterators/utils.cc
 )
+
+# Chapter 09 Notes
+add_executable(
+    ch-09
+    ch09-classes/main.cc
+    ch09-classes/student_info.cc
+)
