@@ -39,11 +39,10 @@ Student::grade_num Student::grade() const
 
 /* Calculates the final grade, provided a midterm grade, final exam grade, and
    a vector of homework grades */
-Student::grade_num grade(
-    const Student::grade_num midterm,
-    const Student::grade_num final,
-    Student::grade_nums::const_iterator hw_begin,
-    Student::grade_nums::const_iterator hw_end)
+Student::grade_num grade(const Student::grade_num midterm,
+                         const Student::grade_num final,
+                         Student::grade_nums::const_iterator hw_begin,
+                         Student::grade_nums::const_iterator hw_end)
 {
     if ((hw_end - hw_begin) == 0)
         throw std::domain_error("Student has done no homework");
@@ -56,10 +55,9 @@ Student::grade_num grade(
 
 /* Applies the correct weighting to the midterm grade, final exam grade, and
    overall homework grade to calculate final grade. */
-Student::grade_num grade(
-    const Student::grade_num midterm,
-    const Student::grade_num final,
-    const Student::grade_num homework)
+Student::grade_num grade(const Student::grade_num midterm,
+                         const Student::grade_num final,
+                         const Student::grade_num homework)
 {
     return 0.2 * midterm + 0.4 * final + 0.4 * homework;
 }
