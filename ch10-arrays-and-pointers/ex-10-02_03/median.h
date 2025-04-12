@@ -20,7 +20,7 @@ TypeOutput median(ContainerIterator begin, ContainerIterator end)
     if (input_size == 1)
         return input[0];
 
-    std::sort(first, first + input_size - 1);
+    std::sort(first, first + input_size);
     const TypeOutput *mid = first + input_size / 2;
     return input_size % 2 == 0 ? (*mid + mid[-1]) / 2 : *mid;
 }
