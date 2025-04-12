@@ -227,3 +227,9 @@ add_executable(
     say
     ch10-arrays-and-pointers/args-to-main.cc
 )
+
+# Chapter 10 Section 5
+add_executable(
+    sec-10-05
+    ch10-arrays-and-pointers/file-streams.cc
+)

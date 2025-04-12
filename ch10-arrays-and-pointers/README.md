@@ -32,7 +32,7 @@ address of `x`:
 int *p; // *p has type int
 ```
 
-### Pointers to Funcitons
+### Pointers to funcitons
 Functions are not first class objects in C++ - all a program can do with a
 function is call it or access its address.
 
@@ -103,7 +103,7 @@ double arr[4];
 std::size_t arr_length = sizeof(arr) / sizeof(*arr);
 ```
 
-### Pointer Arithmetic
+### Pointer arithmetic
 Recall that *pointers* are **random-access iterators**. So, we can add and
 subtract to the iterators.
 
@@ -139,7 +139,7 @@ Let `a` be an `n`-element array. Then the following are true:
 - That `[]` indexes arrays is a property of pointers and random-access
   iterators, not arrays themselves directly.
 
-### String Literals
+### String literals
 - **string literals** are arrays of `const char`
 - While `char`'s use `''`, **string literals use `""`**.
 - `strlen()` provides the length of an array of characters, up to the null
@@ -165,3 +165,71 @@ string literal.
 | `letter_grades[2]`  | `"A-"`                               |
 | `letter_grades + 3` | [address of first character in "B+"] |
 | `letter_grades[3]`  | `"B+"`                               |
+
+### Managing external files
+- To read input from a file stream use the type `ifstream`
+- The `ofstream` type is used for an output stream to files
+- Both types exist in the `<fstream>` header.
+
+### Memory management
+Three kinds of memory management exist in C++: **automatic**,
+**statically allocated**, and **dynamically allocated**
+
+*Note, smart pointers were introduced in C++11, and are now the de-facto mode
+of memory management. They "smartly" deallocate memory when pointers are out of
+scope. More to learn in a next book!
+
+#### Automatic memory management
+**Automatic** memory management is associated with local variables. When a
+local variable is no longer in scope, the memory it occupies is *automatically*
+deallocated.
+
+For example, you cannot return a pointer to a local variable:
+```cpp
+// do not run!
+int* pointer_to_local() {
+    int x;
+    return &x; // if you do this, the unexpected will occur
+}
+```
+
+#### Statically allocated memory
+One way to return a pointer to a variable is to return a pointer to a *static*
+variable. Such allocation is known is **statically allocated** memory:
+```cpp
+int* pointer_to_static() {
+    static int x;
+    retunr &x; // valid
+}
+```
+Each time `pointer_to_static()` is called, a pointer to the static object x
+will be returned. The `static` keyword says that we are only to allocate this
+memory once.
+
+#### Dynamically allocated memory
+If you want to return a pointer to a *new* object, one you wish to *delete*
+later, you use **dynamic allocation**.
+```cpp
+// define a pointer to an integer object, with a value of 42
+int* p = new int(42);
+
+// increment the object to which p points by 1
+++*p;
+
+// deallocate the memory utilied by the object to which p refers
+delete p;
+```
+
+So, we can return a pointer to a dynamically allocated object:
+```cpp
+int* pointer_to_dynamic() {
+    return new int(0);
+}
+```
+
+The functionality is similar for arrays:
+```cpp
+int* p = new int[10];
+++*p; // increments first value only
+delete[] p; // deallocates space occupied by entire array
+```
