@@ -209,3 +209,9 @@ add_executable(
     ch09-classes/main.cc
     ch09-classes/student_info.cc
 )
+
+# Chapter 10 Section 1.1
+add_executable(
+    sec-10-01-01
+    ch10-arrays-and-pointers/hello-pointers.cc
+)
