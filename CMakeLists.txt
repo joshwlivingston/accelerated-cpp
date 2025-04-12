@@ -215,3 +215,15 @@ add_executable(
     sec-10-01-01
     ch10-arrays-and-pointers/hello-pointers.cc
 )
+
+# Chapter 10 Section 3
+add_executable(
+    sec-10-03
+    ch10-arrays-and-pointers/array-length.cc
+)
+
+# Chapter 10 Section 4
+add_executable(
+    say
+    ch10-arrays-and-pointers/args-to-main.cc
+)

@@ -90,6 +90,19 @@ incrementer get_incrementer();
   *size of an array*. `size_t` uses an appropriate `unsigned` type.
 - `size_type` is for *containers*; `size_t` is for *arrays*.
 
+#### Array lengths
+- `sizeof()` returns a `size_t` value reporting the size of the object in bytes
+- When used on an array, `sizeof()` returns the size of the *entire array*.
+
+So, to calculate the length of an array, divide the size of the array by the
+size of one element:
+```cpp
+#include <cstddef>
+
+double arr[4];
+std::size_t arr_length = sizeof(arr) / sizeof(*arr);
+```
+
 ### Pointer Arithmetic
 Recall that *pointers* are **random-access iterators**. So, we can add and
 subtract to the iterators.
@@ -118,13 +131,37 @@ Let `a` be an `n`-element array. Then the following are true:
 - `a + i` refers to an element of `a` *if and only if* `0 <= i < n`
 
 ### Indexing
-Since pointers are random-access iterators, they support indexing. `p[n]`
-refers to the `n`'th *element* after `p`.
+- Since pointers are random-access iterators, they support indexing. `p[n]`
+  refers to the `n`'th *element* after `p`.
+- As noted in chapter 8, `p[n]` is equivalent to `*(p + n)`.
+- This, taken with the fact that `v` points to the first element of `v`, means
+  that `v[n]` will refer to the `n`'th element of `v`.
+- That `[]` indexes arrays is a property of pointers and random-access
+  iterators, not arrays themselves directly.
 
-As noted in chapter 8, `p[n]` is equivalent to `*(p + n)`.
+### String Literals
+- **string literals** are arrays of `const char`
+- While `char`'s use `''`, **string literals use `""`**.
+- `strlen()` provides the length of an array of characters, up to the null
+  pointer
+  
+When initializing a character array, you can specify that pointers do not
+strictly increment by 1:
+```cpp
+char* const letter_grades[] = {"A+", "A", "A-", "B+", "B", "B-", 
+                               "C+", "C", "C-", "D", "F"}
+```
 
-This, taken with the fact that `v` points to the first element of `v`, means
-that `v[n]` will refer to the `n`'th element of `v`.
-
-That `[]` indexes arrays is a property of pointers and random-access iterators,
-not arrays themselves directly.
+Here, `letter_grades` is an array of constant pointers to const char
+(`char* const`). Each element points to the initial element of each provided
+string literal.
+| Call                | Value                                |
+| ------------------- | ------------------------------------ |
+| `letter_grades `    | [address of first character in "A+"] |
+| `*letter_grades`    | `"A+"`                               |
+| `letter_grades + 1` | [address of first character in "A"]  |
+| `letter_grades[1]`  | `"A"`                                |
+| `letter_grades + 2` | [address of first character in "A-"] |
+| `letter_grades[2]`  | `"A-"`                               |
+| `letter_grades + 3` | [address of first character in "B+"] |
+| `letter_grades[3]`  | `"B+"`                               |
