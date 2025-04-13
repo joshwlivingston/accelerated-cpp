@@ -234,8 +234,15 @@ add_executable(
     ch10-arrays-and-pointers/file-streams.cc
 )
 
-# Chapter 10 Exercise 2-3
+# Chapter 10 Exercises 2-3
 add_executable(
     ex-10-02_03
     ch10-arrays-and-pointers/ex-10-02_03/main.cc
+)
+
+# Chapter 10 Exercises 4-6
+add_executable(
+    ex-10-04_06
+    ch10-arrays-and-pointers/ex-10-04_06/main.cc
+    ch10-arrays-and-pointers/ex-10-04_06/string_list.cc
 )
