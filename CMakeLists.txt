@@ -246,3 +246,9 @@ add_executable(
     ch10-arrays-and-pointers/ex-10-04_06/main.cc
     ch10-arrays-and-pointers/ex-10-04_06/string_list.cc
 )
+
+# Chapter 11 Notes
+add_executable(
+    ch-11
+    ch11-abstract-data-types/main.cc
+)
