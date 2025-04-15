@@ -3,9 +3,7 @@
 
 #include "iterator_input.h"
 
-template <class T>
-class IteratorForward : protected IteratorInput<T>
-{
+template <class T> class IteratorForward : protected IteratorInput<T> {
 public:
     using IteratorInput<T>::IteratorInput;
     using IteratorInput<T>::operator++;
@@ -13,7 +11,7 @@ public:
     IteratorForward(T &val, IteratorForward &next) {
         IteratorInput<T>::assign(val, next);
     }
-    
+
     bool operator==(const IteratorForward &rhs) const {
         return IteratorInput<T>::is_equal(rhs);
     }

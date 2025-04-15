@@ -1,15 +1,13 @@
 #ifndef GUARD_iterator_h
 #define GUARD_iterator_h
 
-template <class T>
-class Iterator
-{
+template <class T> class Iterator {
 public:
     Iterator() { set_pointers_to_zero(); }
     Iterator(T &val) { assign(val); }
     ~Iterator() { set_pointers_to_zero(); }
     Iterator &operator++() const { return *next_; }
-    const T &operator*() const{ return dereference(); }
+    const T &operator*() const { return dereference(); }
 
 protected:
     typedef T *address;

@@ -3,9 +3,7 @@
 
 #include "iterator_forward.h"
 
-template <class T>
-class IteratorBidirectional : protected IteratorForward<T>
-{
+template <class T> class IteratorBidirectional : protected IteratorForward<T> {
 public:
     using IteratorForward<T>::operator++;
 
@@ -59,7 +57,7 @@ protected:
         this->data = &here;
         prev_ = &prev;
     }
-    
+
     void assign(T &new_data, Iterator<T> &new_next, 
                 IteratorBidirectional &new_prev) {
         this->data = &new_data;

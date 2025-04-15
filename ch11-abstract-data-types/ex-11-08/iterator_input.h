@@ -20,9 +20,7 @@ operator: *(read only)
 operator: ->
 */
 
-template <class T>
-class IteratorInput : protected Iterator<T>
-{
+template <class T> class IteratorInput : protected Iterator<T> {
 public:
     using Iterator<T>::Iterator;
     using Iterator<T>::operator++;
