@@ -27,18 +27,15 @@ public:
     using Iterator<T>::Iterator;
     using Iterator<T>::operator++;
 
-    IteratorInput(T &val, IteratorInput &next)
-    {
-        Iterator<T>::assign(val, next);
+    IteratorInput(T &val, IteratorInput &next) {
+        Iterator<T>::assign(val, next); 
     }
 
-    bool operator==(const IteratorInput &rhs) const
-    {
-        return Iterator<T>::is_equal(rhs);
+    bool operator==(const IteratorInput &rhs) const {
+        return Iterator<T>::is_equal(rhs); 
     }
 
-    bool operator!=(const IteratorInput &rhs) const
-    {
+    bool operator!=(const IteratorInput &rhs) const {
         return !Iterator<T>::is_equal(rhs);
     }
 };

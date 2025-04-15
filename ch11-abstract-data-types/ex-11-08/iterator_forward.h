@@ -10,25 +10,19 @@ public:
     using IteratorInput<T>::IteratorInput;
     using IteratorInput<T>::operator++;
 
-    IteratorForward(T &val, IteratorForward &next)
-    {
+    IteratorForward(T &val, IteratorForward &next) {
         IteratorInput<T>::assign(val, next);
     }
-
-    bool operator==(const IteratorForward &rhs) const
-    {
+    
+    bool operator==(const IteratorForward &rhs) const {
         return IteratorInput<T>::is_equal(rhs);
     }
 
-    bool operator!=(const IteratorForward &rhs) const
-    {
+    bool operator!=(const IteratorForward &rhs) const {
         return !IteratorInput<T>::is_equal(rhs);
     }
 
-    T &operator*()
-    {
-        return IteratorInput<T>::dereference();
-    }
+    T &operator*() { return IteratorInput<T>::dereference(); }
 };
 
 #endif // GUARD_forward_iterator_h
