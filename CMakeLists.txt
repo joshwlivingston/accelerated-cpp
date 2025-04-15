@@ -251,4 +251,12 @@ add_executable(
 add_executable(
     ch-11
     ch11-abstract-data-types/main.cc
+    ch11-abstract-data-types/student_info.cc
 )
+
+# Chapter 11 Exercise 8
+add_executable(
+    ex-11-08
+    ch11-abstract-data-types/ex-11-08/main.cc
+)
+

@@ -1,7 +1,13 @@
 #ifndef GUARD_vec_h
 #define GUARD_vec_h
 
-#include <algorithm>
+/*
+Exercise 7
+>Add an operation to remove an element from a `Vec` and another to empty the
+>entire `Vec`. These should behave analogously to the `erase` and `clear`
+>operations on `vector`'s.
+*/
+
 #include <cstddef>
 #include <memory>
 
@@ -54,6 +60,19 @@ public:
     iterator end() { return avail; }
     const_iterator end() const { return avail; }
 
+    // Destroy a single object in a Vec and de-allocate its memory
+    // into newly allocated memory with new size
+    size_type erase(iterator where) { return uncreate(where, where + 1); }
+
+    // Destory objects in the range [erase_begin, erase_end) and deallocate
+    // memory
+    size_type erase(iterator erase_begin, iterator erase_end)
+    {
+        return uncreate(erase_begin, erase_end + 1);
+    }
+
+    void clear() { uncreate(); }
+
     // ptrdiff_t (limit - data) converted to size_type on return
     size_type size() const { return limit - data; }
 
@@ -91,6 +110,7 @@ private:
     void create(const_iterator, const_iterator);
 
     void uncreate();
+    size_type uncreate(iterator, iterator);
 
     void grow();
     void unchecked_append(const T &);
@@ -171,6 +191,31 @@ void Vec<T>::uncreate()
     }
 }
 
+// Copies all elements except those in range [uncreate_begin, uncreate_end)
+// into a new array and resets Vec's pointers to new array
+template <class T>
+typename Vec<T>::size_type Vec<T>::uncreate(iterator uncreate_begin,
+                                            iterator uncreate_end)
+{
+    if (uncreate_begin == end())
+        return 0;
+    const size_type number_destroyed = uncreate_end - uncreate_begin;
+    const size_type new_size = size() - number_destroyed;
+    const iterator new_data = alloc.allocate(new_size);
+
+    std::uninitialized_copy(data, uncreate_begin, new_data);
+    const iterator new_avail = std::uninitialized_copy(
+        uncreate_end, avail, new_data[uncreate_begin - data]);
+
+    uncreate();
+
+    data = new_data;
+    avail = new_avail;
+    limit = data + new_size;
+
+    return number_destroyed;
+}
+
 /*
 1. Allocate twice as much space as is currently in use (or 1 block if no
    space is allocated).
@@ -180,7 +225,7 @@ template <class T>
 void Vec<T>::grow()
 {
     // return twice as much space as is currently in use
-    const size_type new_size = std::max(2 * size(), size_type(1));
+    const size_type new_size = max<size_type>(2 * size(), size_type(1));
 
     // allocate new space and copy existing elements into new space
     const iterator new_data = alloc.allocate(new_size);
@@ -202,5 +247,9 @@ void Vec<T>::unchecked_append(const T &val)
 {
     alloc.construct(avail++, val);
 }
+
+// Returns the maximum between x and y, or x if they are equal
+template <class T>
+T &max(T &x, T &y) { return x >= y ? x : y; }
 
 #endif // GUARD_vec_h
