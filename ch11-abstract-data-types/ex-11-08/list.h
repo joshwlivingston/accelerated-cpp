@@ -7,27 +7,21 @@ template <class T>
 class ListNode
 {
 public:
-    ListNode() {}
-    ListNode(const T &val) { data = val; }
-    ListNode(const ListNode &prev_node, const T &val)
-    {
-        data = val;
-        prev = &prev_node;
-    }
-    ListNode(const T &val, const ListNode &next_node)
-    {
-        data = val;
-        next = &next_node;
-    }
+    ListNode() : data(nullptr), next(nullptr), prev(nullptr) {}
+    ListNode(const T &val) : data(new T(val)), next(nullptr), prev(nullptr) {}
+    ListNode(const ListNode &prev_node, const T &val) : data(new T(val)),
+                                                        next(nullptr),
+                                                        prev(&prev_node) {}
+    ListNode(const T &val, const ListNode &next_node) : data(new T(val)),
+                                                        next(&next_node),
+                                                        prev(nullptr) {}
     ListNode(const ListNode &prev_node, const T &val,
-             const ListNode &next_node)
-    {
-        data = val;
-        next = &next_node;
-        prev = &prev_node;
-    }
+             const ListNode &next_node) : data(new T(val)), next(&next_node),
+                                          prev(prev_node) {}
 
-    T data;
+    ~ListNode() { delete data; }
+
+    T *data;
     ListNode *next;
     ListNode *prev;
 };
@@ -39,23 +33,49 @@ public:
     ListNodeIterator() : current(new ListNode<T>()) {}
     ListNodeIterator(ListNode<T> &node) { current = &node; }
 
-    ListNodeIterator &operator++()
+    ~ListNodeIterator() {}
+
+    ListNodeIterator operator++()
     {
         current = current->next;
         return *this;
     }
-    ListNodeIterator &operator--()
+    ListNodeIterator operator++(int)
+    {
+        ListNodeIterator res = *this;
+        ++(*this);
+        return res;
+    }
+    ListNodeIterator operator--()
     {
         current = current->prev;
         return *this;
     }
-    T &operator*() { return current->data; }
-    bool operator==(const ListNodeIterator &rhs) const { return current == rhs.current; }
-    bool operator!=(const ListNodeIterator &rhs) const { return current != rhs.current; }
-    void update_next_ref(ListNodeIterator &new_next) { current->next = new_next.current; }
-    void update_prev_ref(ListNodeIterator &new_prev) { current->prev = new_prev.current; }
-    void remove_next_ref() { current->next = new ListNode<T>(); }
-    void remove_prev_ref() { current->prev = new ListNode<T>(); }
+    ListNodeIterator operator--(int)
+    {
+        ListNodeIterator res = *this;
+        --(*this);
+        return res;
+    }
+    T &operator*() { return *current->data; }
+    bool operator==(const ListNodeIterator &rhs) const
+    {
+        return current == rhs.current;
+    }
+    bool operator!=(const ListNodeIterator &rhs) const
+    {
+        return current != rhs.current;
+    }
+    void update_next_ref(ListNodeIterator &new_next)
+    {
+        current->next = new_next.current;
+    }
+    void update_prev_ref(ListNodeIterator &new_prev)
+    {
+        current->prev = new_prev.current;
+    }
+    void remove_next_ref() { current->next = nullptr; }
+    void remove_prev_ref() { current->prev = nullptr; }
 
     ListNode<T> *current;
 };
@@ -121,21 +141,35 @@ public:
 
     ~List() { uncreate(); }
 
-    size_type erase(iterator &erase_begin, iterator &erase_end)
+    void insert(iterator &where, iterator &insert_begin, iterator &insert_end)
+    {
+        insert(where, insert_begin, insert_end, 
+               length(insert_begin, insert_end));
+    }
+    void insert(iterator &where, iterator &insert_begin, iterator &insert_end,
+                size_type n_inserted)
+    {
+        iterator one_after_where = where;
+        ++one_after_where;
+        where.update_next_ref(insert_begin);
+        iterator last_element_inserted = insert_end;
+        --last_element_inserted;
+        last_element_inserted.update_next_ref(one_after_where);
+        one_after_where.update_prev_ref(last_element_inserted);
+        size_ += n_inserted;
+    }
+    void erase(iterator &erase_begin, iterator &erase_end)
     {
         if (erase_begin == erase_end)
-            return 0;
+            return;
 
         const size_type n_erased = length(erase_begin, erase_end);
-        if (&erase_begin == &begin())
-        {
-            link_to_end(erase_begin, erase_end);
-        }
 
-        else if (&erase_end == &end())
+        if (&erase_end == &end())
         {
             if (last == avail)
-                last = &erase_begin;
+                avail = &erase_end;
+            last = &erase_begin;
         }
 
         else
@@ -144,8 +178,8 @@ public:
         }
 
         size_ -= n_erased;
-        return n_erased;
     }
+    void resize() { remove_erased_elements(); }
     void clear() { uncreate(); }
 
     iterator &begin() { return *data; }
@@ -153,53 +187,66 @@ public:
     size_type size() { return size_; }
 
 private:
+    void remove_erased_elements()
+    {
+        iterator current = *last;
+        if (last != avail)
+            ++current;
+        while (current != *avail)
+        {
+            delete current.current->data;
+            ++current;
+        }
+    }
     void uncreate()
     {
-        iterator *current = data;
-        while (current != nullptr)
+        iterator current = *data;
+        while (current != *avail)
         {
-            iterator *next = &++*current;
-            delete current;
-            if (next == avail)
-                break;
-            current = next;
+            delete current.current->data;
+            ++current;
         }
-        delete avail;
     }
-
-    void link_to_end(iterator &begin, iterator &end)
+    void remove_link(iterator &erase_begin, iterator &erase_end)
     {
-        avail->update_next_ref(begin);
-        begin.update_prev_ref(*avail);
-        end.remove_prev_ref();
-        if (last == avail)
-            last = &begin;
-        avail = &end;
-    }
-
-    void remove_link(iterator begin, iterator end)
-    {
-        iterator link_before_begin = begin;
-        iterator link_before_end = end;
-        --link_before_begin;
+        iterator link_before_end = erase_end;
         --link_before_end;
-        link_before_begin.update_next_ref(end);
-        end.update_prev_ref(link_before_begin);
-        avail->update_next_ref(begin);
-        begin.update_prev_ref(*avail);
-        link_before_end.remove_next_ref();
-        avail = &link_before_end;
+        if (erase_begin == begin())
+        {
+            data = &erase_end;
+            iterator link_before_last = *avail;
+            --link_before_last;
+            link_before_last.update_next_ref(erase_begin);
+            erase_begin.update_prev_ref(link_before_last);
+            if (last == avail)
+                last = &erase_begin;
+            avail = &link_before_end;
+        }
+        else
+        {
+            iterator link_before_begin = erase_begin;
+            --link_before_begin;
+            link_before_begin.update_next_ref(erase_end);
+            erase_end.update_prev_ref(link_before_begin);
+
+            link_before_end.update_next_ref(erase_begin);
+
+            avail->update_next_ref(erase_begin);
+            erase_begin.update_prev_ref(*avail);
+            link_before_end.remove_next_ref();
+            avail = &link_before_end;
+        }
     }
 
-    size_type length(iterator &begin, iterator &end)
+    size_type length(iterator &begin, const_iterator &end) const
     {
         iterator current = begin;
         size_type out = 0;
-        do
+        while (current != end)
         {
             ++out;
             ++current;
-        } while (current != end);
+        }
         return out;
     }
 
