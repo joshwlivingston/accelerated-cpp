@@ -75,6 +75,7 @@ public:
         last = avail = new iterator();
         data->update_next_ref(*last);
         last->update_prev_ref(*data);
+        last->update_next_ref(*avail);
     }
 
     List(const T &val)
@@ -84,6 +85,7 @@ public:
         last = avail = new iterator();
         data->update_next_ref(*last);
         last->update_prev_ref(*data);
+        last->update_next_ref(*avail);
         size_ = 1;
     }
     List(const size_type &n, const T &val)
@@ -94,7 +96,8 @@ public:
         ListNode<T> *node = new ListNode<T>(val);
         data = new iterator(*node);
         ++size_;
-        if (n == 1) return;
+        if (n == 1)
+            return;
 
         iterator *current = data;
         while (true)
@@ -104,21 +107,49 @@ public:
             current->update_next_ref(*new_it);
             new_it->update_prev_ref(*current);
             ++size_;
-            if (size_ == n) {
+            if (size_ == n)
+            {
                 last = avail = new iterator();
                 new_it->update_next_ref(*last);
                 last->update_prev_ref(*new_it);
+                last->update_next_ref(*avail);
                 break;
             }
             current = new_it;
         }
     }
 
-    ~List() {uncreate();}
-    
-    void clear() {uncreate();}
-    const_iterator &begin() { return *data; }
-    const_iterator &end() { return *last; }
+    ~List() { uncreate(); }
+
+    size_type erase(iterator &erase_begin, iterator &erase_end)
+    {
+        if (erase_begin == erase_end)
+            return 0;
+
+        const size_type n_erased = length(erase_begin, erase_end);
+        if (&erase_begin == &begin())
+        {
+            link_to_end(erase_begin, erase_end);
+        }
+
+        else if (&erase_end == &end())
+        {
+            if (last == avail)
+                last = &erase_begin;
+        }
+
+        else
+        {
+            remove_link(erase_begin, erase_end);
+        }
+
+        size_ -= n_erased;
+        return n_erased;
+    }
+    void clear() { uncreate(); }
+
+    iterator &begin() { return *data; }
+    iterator &end() { return *last; }
     size_type size() { return size_; }
 
 private:
@@ -134,6 +165,42 @@ private:
             current = next;
         }
         delete avail;
+    }
+
+    void link_to_end(iterator &begin, iterator &end)
+    {
+        avail->update_next_ref(begin);
+        begin.update_prev_ref(*avail);
+        end.remove_prev_ref();
+        if (last == avail)
+            last = &begin;
+        avail = &end;
+    }
+
+    void remove_link(iterator begin, iterator end)
+    {
+        iterator link_before_begin = begin;
+        iterator link_before_end = end;
+        --link_before_begin;
+        --link_before_end;
+        link_before_begin.update_next_ref(end);
+        end.update_prev_ref(link_before_begin);
+        avail->update_next_ref(begin);
+        begin.update_prev_ref(*avail);
+        link_before_end.remove_next_ref();
+        avail = &link_before_end;
+    }
+
+    size_type length(iterator &begin, iterator &end)
+    {
+        iterator current = begin;
+        size_type out = 0;
+        do
+        {
+            ++out;
+            ++current;
+        } while (current != end);
+        return out;
     }
 
     iterator *data;

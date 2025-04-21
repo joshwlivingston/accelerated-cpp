@@ -23,7 +23,8 @@ int main()
     }
 
     // create a list of multiple values and delete some
-    lst l_04(200, 5);
+    lst l_04(8, 5);
+    std::cout << "Original size: " << l_04.size() << std::endl;
 
     lst::iterator erase_begin = l_04.begin();
     ++erase_begin;
@@ -33,18 +34,16 @@ int main()
     ++erase_end;
     ++erase_end;
 
-    std::cout << "Original size: " << l_04.size() << std::endl;
-
     l_04.erase(erase_begin, erase_end);
-
-    std::cout << "New size: " << l_04.size() << std::endl;
     lst::iterator it_04 = l_04.begin();
     lst::const_iterator end_04 = l_04.end();
-    // while (it_04 != end_04)
-    // {
-    //     std::cout << *it_04 << std::endl;
-    //     ++it_04;
-    // }
+
+    std::cout << "New size: " << l_04.size() << std::endl;
+    while (it_04 != end_04)
+    {
+        std::cout << *it_04 << std::endl;
+        ++it_04;
+    }
 
     return 0;
 }
