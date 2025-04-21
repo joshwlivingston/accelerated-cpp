@@ -1,183 +1,145 @@
-#ifndef GUARD_List_h
-#define GUARD_List_h
-
-/*
-Implements a simplified version of std::list
-
-Types:
-- iterator
-- const_iterator
-- size_type
-- value_type
-
-Constructors/Assignment:
-- empty
-- copy
-- assignment
-- size, value
-
-Destructors:
-- destructor
-
-Operators:
-- assignment
-
-Functions:
-- begin()
-- end()
-- size()
-- erase()
-- clear()
-
-*/
+#ifndef GUARD_list_h
+#define GUARD_list_h
 
 #include <cstddef>
-#include <memory>
 
-#include "iterator_bidirectional.h"
+template <class T>
+class ListNode
+{
+public:
+    ListNode() {}
+    ListNode(const T &val) { data = val; }
+    ListNode(const ListNode &prev_node, const T &val)
+    {
+        data = val;
+        prev = &prev_node;
+    }
+    ListNode(const T &val, const ListNode &next_node)
+    {
+        data = val;
+        next = &next_node;
+    }
+    ListNode(const ListNode &prev_node, const T &val,
+             const ListNode &next_node)
+    {
+        data = val;
+        next = &next_node;
+        prev = &prev_node;
+    }
 
-/* List, implemented as doubly-linked list */
+    T data;
+    ListNode *next;
+    ListNode *prev;
+};
+
+template <class T>
+class ListNodeIterator
+{
+public:
+    ListNodeIterator() : current(new ListNode<T>()) {}
+    ListNodeIterator(ListNode<T> &node) { current = &node; }
+
+    ListNodeIterator &operator++()
+    {
+        current = current->next;
+        return *this;
+    }
+    ListNodeIterator &operator--()
+    {
+        current = current->prev;
+        return *this;
+    }
+    T &operator*() { return current->data; }
+    bool operator==(const ListNodeIterator &rhs) const { return current == rhs.current; }
+    bool operator!=(const ListNodeIterator &rhs) const { return current != rhs.current; }
+    void update_next_ref(ListNodeIterator &new_next) { current->next = new_next.current; }
+    void update_prev_ref(ListNodeIterator &new_prev) { current->prev = new_prev.current; }
+    void remove_next_ref() { current->next = new ListNode<T>(); }
+    void remove_prev_ref() { current->prev = new ListNode<T>(); }
+
+    ListNode<T> *current;
+};
+
 template <class T>
 class List
 {
 public:
-    typedef IteratorBidirectional<T> iterator;
-    typedef const IteratorBidirectional<T> const_iterator;
+    typedef ListNodeIterator<T> iterator;
+    typedef const ListNodeIterator<T> const_iterator;
     typedef std::size_t size_type;
     typedef T value_type;
 
     List()
     {
-        set_pointers_to_zero();
+        data = new iterator();
+        last = avail = new iterator();
+        data->update_next_ref(*last);
+        last->update_prev_ref(*data);
     }
 
-    List(const List &input)
+    List(const T &val)
     {
-        create(*input);
+        ListNode<T> *node = new ListNode<T>(val);
+        data = new iterator(*node);
+        last = avail = new iterator();
+        data->update_next_ref(*last);
+        last->update_prev_ref(*data);
+        size_ = 1;
     }
-
-    explicit List(size_type &n, const T &val)
+    List(const size_type &n, const T &val)
     {
-        create(n, val);
+        if (n == 0)
+            return;
+
+        ListNode<T> *node = new ListNode<T>(val);
+        data = new iterator(*node);
+        ++size_;
+        if (n == 1) return;
+
+        iterator *current = data;
+        while (true)
+        {
+            ListNode<T> *node = new ListNode<T>(val);
+            iterator *new_it = new iterator(*node);
+            current->update_next_ref(*new_it);
+            new_it->update_prev_ref(*current);
+            ++size_;
+            if (size_ == n) {
+                last = avail = new iterator();
+                new_it->update_next_ref(*last);
+                last->update_prev_ref(*new_it);
+                break;
+            }
+            current = new_it;
+        }
     }
 
-    // List &operator=(const List &);
-
-    // ~List() { uncreate(); }
-
-    iterator begin() { return data; }
-    iterator end() { return last; }
+    ~List() {uncreate();}
+    
+    void clear() {uncreate();}
+    const_iterator &begin() { return *data; }
+    const_iterator &end() { return *last; }
     size_type size() { return size_; }
 
-    void erase(iterator &where)
-    {
-        iterator one_after_where = (*where)++;
-        erase(*where, one_after_where);
-    }
-
-    void erase(iterator &begin, iterator &end)
-    {
-        // point `next_` in element before range to one after erased range
-        --begin;
-        begin.next_ = *end;
-
-        // point `prev_` in one after erased range to element before range
-        end->prev_ = *(begin);
-        ++begin; // back on input `begin`
-
-        // point `next_` in last erased element to first available element
-        --end;
-        end.next_ = *start;
-
-        // point class start to start of this erased range
-        start = *begin;
-    }
-    // void resize() { deallocate_unlinked_elements(); }
-    // void clear() { uncreate(); }
-
 private:
-    void create(const List &);
-    void create(const size_type &, const T &);
-    // void uncreate();
-    // void invalid_uncreate(iterator, iterator);
-    void set_pointers_to_zero();
-    void swap_with_end(iterator);
-    // void deallocate_unlinked_elements();
+    void uncreate()
+    {
+        iterator *current = data;
+        while (current != nullptr)
+        {
+            iterator *next = &++*current;
+            delete current;
+            if (next == avail)
+                break;
+            current = next;
+        }
+        delete avail;
+    }
 
-    /*
-    Class invariant:
-    1. `start` points to the first allocated block in the array, or 0 if no
-       memory has been allocated
-    2. `data` points to the first assigned element in the array, or 0 if are no
-       elements are assigned
-    3. `last` points to one past the last assignned element
-    4. `avail` points to one past the last created element
-    5. `start` <= `data` <= `last` <= `avail`
-    6. [data, last) is the range of all assignened elements
-    7. [data, avail) is the range of all allocated elements
-    8. [last, avail) is the range of allocated but un-assigned elements
-    */
-    iterator *start; 
-    iterator data;
-    iterator last;
-    iterator avail;
-    size_type size_;
-
-    std::allocator<T> alloc;
+    iterator *data;
+    iterator *last;
+    iterator *avail;
+    size_type size_ = 0;
 };
-
-// template <class T>
-// List<T> &List<T>::operator=(const List &rhs)
-// {
-//     if (this != rhs) // comparing reference to reference
-//     {
-//         const iterator new_data = alloc.allocate(rhs.size());
-//         const iterator new_last = std::uninitialized_copy(rhs.begin(), rhs.end(),
-//                                                  new_data);
-//         invalid_uncreate(data, avail);
-//         data = new_data;
-//         last = avail = new_last;
-//     }
-// }
-
-// template <class T>
-// void List<T>::uncreate()
-// {
-//     invalid_uncreate(data, avail);
-//     set_pointers_to_zero();
-// }
-
-// template <class T>
-// void List<T>::invalid_uncreate(iterator begin, iterator end)
-// {
-//     iterator current = end;
-//     size_type n_destroyed = 0;
-//     while (current != begin)
-//     {
-//         alloc.destroy(--current);
-//         ++n_destroyed;
-//     }
-//     alloc.deallocate(begin, n_destroyed);
-// }
-
-template <class T>
-void List<T>::set_pointers_to_zero()
-{
-    start = data = last = avail = 0;
-}
-
-template <class T>
-void List<T>::create(const List &input)
-{
-    data = alloc.allocate(input.size());
-    // last = avail = std::uninitialized_copy(input.begin(), input.end(), data);
-}
-
-template <class T>
-void List<T>::create(const size_type &n, const T &val)
-{
-    data = *alloc.allocate(n);
-    // last = avail = std::uninitialized_fill_n(data, n, val);
-}
 
 #endif

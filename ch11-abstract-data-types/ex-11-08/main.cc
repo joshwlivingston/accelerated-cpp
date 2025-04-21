@@ -1,120 +1,50 @@
 #include <iostream>
 
-#include "iterator_input.h"
-#include "iterator_forward.h"
-#include "iterator_bidirectional.h"
+#include "list.h"
 
-int main()
+int main() 
 {
-    typedef IteratorInput<double> iit;
-    // initialize an empty InputIterator
-    iit iit_01;
+    typedef List<int> lst;
+    // create an empty list
+    // lst l_01;
 
-    // Copy the empty array into a new array
-    iit iit_02(iit_01);
+    // create a list with one value
+    lst l_02(4);
 
-    // Create new InputIterator with default value
-    double four = 4; // need to allocate before initializing InputIterator
-    iit iit_04(four);
+    // create a list of multiple values
+    lst l_03(4, 20);
 
-    // Create new InputIterator with default values
-    double three = 3;
-    iit iit_05(three, iit_04);
+    lst::iterator it = l_03.begin();
+    lst::const_iterator end = l_03.end();
+    while (it != end)
+    {
+        std::cout << *it << std::endl;
+        ++it;
+    }
 
-    // Assign to new array
-    iit iit_03 = iit_05;
+    // create a list of multiple values and delete some
+    lst l_04(200, 5);
 
-    // delete that array
-    iit_03.~IteratorInput();
+    lst::iterator erase_begin = l_04.begin();
+    ++erase_begin;
 
-    // verify isolated deletion effect, derference, increment
-    std::cout << "Should print " << four << ": " << *++iit_05 << std::endl;
+    lst::iterator erase_end = l_04.begin();
+    ++erase_end;
+    ++erase_end;
+    ++erase_end;
 
-    // equality operator
-    std::cout << "true expected: " << (iit_05 == iit_05) << std::endl;
-    std::cout << "false expected: " << (iit_05 == iit_04) << std::endl;
-    std::cout << "false expected: " << (iit_05 == iit_03) << std::endl;
+    std::cout << "Original size: " << l_04.size() << std::endl;
 
-    // inequality operator
-    std::cout << "false expected: " << (iit_05 != iit_05) << std::endl;
-    std::cout << "true expected: " << (iit_05 != iit_04) << std::endl;
-    std::cout << "true expected: " << (iit_05 != iit_03) << std::endl;
+    l_04.erase(erase_begin, erase_end);
 
-    typedef IteratorForward<double> fit;
-    // initialize an empty ForwardIterator
-    fit fit_01;
+    std::cout << "New size: " << l_04.size() << std::endl;
+    lst::iterator it_04 = l_04.begin();
+    lst::const_iterator end_04 = l_04.end();
+    // while (it_04 != end_04)
+    // {
+    //     std::cout << *it_04 << std::endl;
+    //     ++it_04;
+    // }
 
-    // Copy into new
-    fit fit_02(fit_01);
-
-    // create new with defaults
-    fit fit_05(three);
-    fit fit_04(four, fit_05);
-
-    // reassign the value
-    *fit_05 = 5;
-
-    // assign to new array
-    fit fit_00 = fit_05;
-
-    // delete that array
-    fit_00.~IteratorForward();
-
-    // verify isolated deletion effect, derference, increment
-    std::cout << "Should print 5: " << *++fit_04 << std::endl;
-
-    // equality operator
-    std::cout << "true expected: " << (fit_05 == fit_05) << std::endl;
-    std::cout << "false expected: " << (fit_05 == fit_04) << std::endl;
-    std::cout << "false expected: " << (fit_05 == fit_00) << std::endl;
-
-    // inequality operator
-    std::cout << "false expected: " << (fit_05 != fit_05) << std::endl;
-    std::cout << "true expected: " << (fit_05 != fit_04) << std::endl;
-    std::cout << "true expected: " << (fit_05 != fit_00) << std::endl;
-
-    typedef IteratorBidirectional<double> bit;
-    // initialize an empty bidirectional iterator
-    bit bit_01;
-
-    // copy into new
-    bit bit_02(bit_01);
-
-    // create new with defaults
-    double seven = 7;
-    double five = 5;
-    bit bit_04;
-    bit bit_05;
-    bit bit_06;
-
-    bit_04 = bit(four, bit_05);
-    bit_05 = bit(bit_04, five, bit_06);
-    bit_06 = bit(bit_05, seven);
-
-    // reassign a value
-    const double x = *bit_06;
-    std::cout << "Should print 7: " << x << std::endl;
-    *bit_06 = 6;
-
-    // assign to new
-    bit bit_00 = bit_06;
-
-    // delete
-    bit_00.~IteratorBidirectional();
-
-    // verify isolated deletion effect, derference, increment
-    std::cout << "Should print 6: " << *++bit_05 << std::endl;
-
-    // decrement
-    std::cout << "Should print 4: " << *--bit_05 << std::endl;
-
-    // equality operator
-    std::cout << "true expected: " << (bit_06 == bit_06) << std::endl;
-    std::cout << "false expected: " << (bit_06 == bit_04) << std::endl;
-    std::cout << "false expected: " << (bit_06 == bit_00) << std::endl;
-
-    // inequality operator
-    std::cout << "false expected: " << (bit_06 != bit_06) << std::endl;
-    std::cout << "true expected: " << (bit_06 != bit_04) << std::endl;
-    std::cout << "true expected: " << (bit_06 != bit_00) << std::endl;
+    return 0;
 }

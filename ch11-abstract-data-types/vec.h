@@ -1,13 +1,7 @@
 #ifndef GUARD_vec_h
 #define GUARD_vec_h
 
-/*
-Exercise 7
->Add an operation to remove an element from a `Vec` and another to empty the
->entire `Vec`. These should behave analogously to the `erase` and `clear`
->operations on `vector`'s.
-*/
-
+#include <algorithm>
 #include <cstddef>
 #include <memory>
 
@@ -225,7 +219,7 @@ template <class T>
 void Vec<T>::grow()
 {
     // return twice as much space as is currently in use
-    const size_type new_size = max<size_type>(2 * size(), size_type(1));
+    const size_type new_size = std::max(2 * size(), size_type(1));
 
     // allocate new space and copy existing elements into new space
     const iterator new_data = alloc.allocate(new_size);
@@ -247,9 +241,5 @@ void Vec<T>::unchecked_append(const T &val)
 {
     alloc.construct(avail++, val);
 }
-
-// Returns the maximum between x and y, or x if they are equal
-template <class T>
-T &max(T &x, T &y) { return x >= y ? x : y; }
 
 #endif // GUARD_vec_h
