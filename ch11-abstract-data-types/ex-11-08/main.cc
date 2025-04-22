@@ -2,7 +2,7 @@
 
 #include "list.h"
 
-int main() 
+int main()
 {
     typedef List<int> lst;
     // create an empty list
@@ -57,15 +57,14 @@ int main()
     lst::iterator end_05 = l_05.end();
 
     std::cout << "New size: " << l_05.size() << std::endl;
-    while(it_05 != end_05)
+    while (it_05 != end_05)
         std::cout << *it_05++ << std::endl;
-
 
     l_05.insert(l_05.begin(), l_04.begin(), l_04.end());
     it_05 = l_05.begin();
     end_05 = l_05.end();
     std::cout << "New size: " << l_05.size() << std::endl;
-    while(it_05 != end_05)
+    while (it_05 != end_05)
         std::cout << *it_05++ << std::endl;
 
     lst::iterator insert_begin = l_05.begin();
@@ -76,9 +75,8 @@ int main()
     it_05 = l_05.begin();
     end_05 = l_05.end();
     std::cout << "New size: " << l_05.size() << std::endl;
-    while(it_05 != end_05)
+    while (it_05 != end_05)
         std::cout << *it_05++ << std::endl;
-
 
     lst::iterator erase_begin_ = l_05.begin();
     ++erase_begin_;
@@ -92,10 +90,9 @@ int main()
     it_05 = l_05.begin();
     end_05 = l_05.end();
     std::cout << "New size: " << l_05.size() << std::endl;
-    while(it_05 != end_05)
+    while (it_05 != end_05)
         std::cout << *it_05++ << std::endl;
     l_05.resize();
-    
 
     return 0;
 }

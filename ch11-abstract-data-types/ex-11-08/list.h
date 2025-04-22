@@ -143,7 +143,7 @@ public:
 
     void insert(iterator &where, iterator &insert_begin, iterator &insert_end)
     {
-        insert(where, insert_begin, insert_end, 
+        insert(where, insert_begin, insert_end,
                length(insert_begin, insert_end));
     }
     void insert(iterator &where, iterator &insert_begin, iterator &insert_end,
@@ -152,6 +152,7 @@ public:
         iterator one_after_where = where;
         ++one_after_where;
         where.update_next_ref(insert_begin);
+        insert_begin.update_prev_ref(where);
         iterator last_element_inserted = insert_end;
         --last_element_inserted;
         last_element_inserted.update_next_ref(one_after_where);
