@@ -263,6 +263,6 @@ project(accelerated-cpp)
 # Chapter 11 Exercise 8
 add_executable(
     ex-11-08
-    ch11-abstract-data-types/ex-11-08/main.cc
+    ch11-abstract-data-types/ex-11-08-doubly-linked-list/main.cc
 )
 
