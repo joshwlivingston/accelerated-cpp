@@ -261,8 +261,14 @@ project(accelerated-cpp)
 # )
 
 # Chapter 11 Exercise 8
-add_executable(
-    ex-11-08
-    ch11-abstract-data-types/ex-11-08-doubly-linked-list/main.cc
-)
+# add_executable(
+#     ex-11-08
+#     ch11-abstract-data-types/ex-11-08-doubly-linked-list/main.cc
+# )
+
+# Chapter 12 Exercises
+# add_executable(
+#     ex-12-00
+#     ch12-imitating-builtins/ex-12-00/string.cc
+# )
 
